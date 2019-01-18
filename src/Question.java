@@ -9,7 +9,6 @@ public class Question {
 
     /**
      * Vergleicht die Antwort mit der Lösung
-     * @param input
      * @param input Die Antwort des Benutzers
      * @return True, wenn die Antwort wahr ist, false wenn nicht
      */

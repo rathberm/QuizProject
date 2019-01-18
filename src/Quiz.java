@@ -77,7 +77,8 @@ public class Quiz {
     }
 
     private void validateInput(String input) {
-        if (input.matches("[A-z0-9]+")) {
+        if (input.matches("[A-z\\s0-9]+")) {
+                return;
         } else {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
             System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
