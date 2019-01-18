@@ -6,10 +6,9 @@ public class Quiz {
     private Question q2;
     private Question q3;
 
-    private ArrayList<Question> questions = new ArrayList<Question>();
+    private ArrayList<Question> questions = new ArrayList<>();
 
     private int right;
-
     private int wrong;
 
     private String name;
@@ -31,8 +30,8 @@ public class Quiz {
      */
     private void initQuestions() {
         q1 = new Question("Wie hoch ist der Eifelturm? ", "300");
-        q2 = new Question("Was ist die Hauptstadt von Schweden?", "stockholm");
-        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "bush");
+        q2 = new Question("Was ist die Hauptstadt von Schweden?", "Stockholm");
+        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush");
         questions.add(q1);
         questions.add(q2);
         questions.add(q3);
@@ -48,9 +47,8 @@ public class Quiz {
             answer = queryUser(q.getQuestion()).toLowerCase();
             validateInput(answer);
 
-
             if (q.validateAnswer(answer)) {
-                System.out.println("Das war richtig " + getName());
+                System.out.println("Das war richtig, " + getName());
                 incRight();
             } else {
                 System.out.println("Das war leider falsch..");
