@@ -124,6 +124,5 @@ public class Quiz {
 
     public void incWrong() {
         this.wrong++;
-
     }
 }
