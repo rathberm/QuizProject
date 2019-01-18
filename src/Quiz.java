@@ -48,7 +48,7 @@ public class Quiz {
             validateInput(answer);
 
             if (q.validateAnswer(answer)) {
-                System.out.println("Das war richtig, " + getName());
+                System.out.println("Das war richtig, " + name);
                 incRight();
             } else {
                 System.out.println("Das war leider falsch..");
@@ -78,11 +78,10 @@ public class Quiz {
 
     private void validateInput(String input) {
         if (input.matches("[A-z0-9]+")) {
-
         } else {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
             System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
-            ;
+
             System.exit(0);
         }
     }

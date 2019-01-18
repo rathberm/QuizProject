@@ -9,19 +9,20 @@ public class Question {
 
     /**
      * Vergleicht die Antwort mit der Lösung
-     * @param input
+     *
      * @param input Die Antwort des Benutzers
      * @return True, wenn die Antwort wahr ist, false wenn nicht
      */
     public boolean validateAnswer(String input) {
         String[] arr = input.split(" ");
-        for (int i = 0; i < arr.length; i++){
+        for (int i = 0; i < arr.length; i++) {
             if (arr[i].contains(this.answer)) {
                 return true;
             } else {
                 return false;
             }
         }
+        return false;
     }
 
     public String getQuestion() {
