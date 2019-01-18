@@ -7,10 +7,6 @@ public class Question {
         this.answer = pAnswer;
     }
 
-    public static void main(String[] args) {
-
-    }
-
     /**
      * Vergleicht die Antwort mit der Lösung
      * @param input
