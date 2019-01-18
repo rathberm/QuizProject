@@ -15,13 +15,13 @@ public class Question {
      */
     public boolean validateAnswer(String input) {
         String[] arr = input.split(" ");
+        boolean rightAnswer = false;
         for (int i = 0; i < arr.length; i++){
             if (arr[i].contains(this.answer)) {
-                return true;
-            } else {
-                return false;
+                rightAnswer = true;
             }
         }
+        return rightAnswer;
     }
 
     public String getQuestion() {
