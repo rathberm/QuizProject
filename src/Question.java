@@ -14,10 +14,13 @@ public class Question {
      * @return True, wenn die Antwort wahr ist, false wenn nicht
      */
     public boolean validateAnswer(String input) {
-        if (input.contains(this.answer)) {
-            return true;
-        } else {
-            return false;
+        String[] arr = input.split(" ");
+        for (int i = 0; i < arr.length; i++){
+            if (arr[i].contains(this.answer)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
