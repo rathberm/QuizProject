@@ -14,7 +14,7 @@ public class Question {
      * @return True, wenn die Antwort wahr ist, false wenn nicht
      */
     public boolean validateAnswer(String input) {
-        if (input.contains(this.answer)) {
+        if (input.contains(this.answer.toLowerCase())) {
             return true;
         } else {
             return false;
