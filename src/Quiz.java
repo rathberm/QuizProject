@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Quiz {
-    private static Quiz quiz;
-
     private Question q1;
     private Question q2;
     private Question q3;
@@ -18,17 +16,14 @@ public class Quiz {
     private String answer;
 
     public Quiz() {
+        setName(queryUser("Hallo, wie heißt du?"));
+        validateName(getName());
+        initQuestions();
+        output();
+
         right = 0;
         wrong = 0;
         answer = "";
-    }
-
-    public static void main(String[] args) {
-        quiz = new Quiz();
-        quiz.setName(quiz.queryUser("Hallo, wie heißt du?"));
-        quiz.validateName(quiz.getName());
-        quiz.initQuestions();
-        quiz.output();
     }
 
     /**
@@ -51,20 +46,20 @@ public class Quiz {
             Question q = questions.get(i);
             System.out.println("Frage " + (i + 1) + "/" + questions.size());
             answer = queryUser(q.getQuestion()).toLowerCase();
-            quiz.validateInput(answer);
+            validateInput(answer);
 
 
             if (q.validateAnswer(answer)) {
-                System.out.println("Das war richtig " + quiz.getName());
-                quiz.incRight();
+                System.out.println("Das war richtig " + getName());
+                incRight();
             } else {
                 System.out.println("Das war leider falsch..");
                 System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
-                quiz.incWrong();
+                incWrong();
             }
         }
         System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + quiz.getRight() + " Fragen richtig und " + quiz.getWrong() + " Fragen falsch beantwortet");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet");
     }
 
     /**
