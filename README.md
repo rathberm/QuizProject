@@ -1,3 +1,4 @@
 # QuizProject
 rathberm = Moritz Rathberger
-new = Jan Roth
+<br>
+newPing = Jan Roth
