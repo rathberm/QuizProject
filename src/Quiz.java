@@ -34,16 +34,15 @@ public class Quiz {
      * @return True wenn ja, false wenn nein
      */
     private boolean checkCategory(String input) {
-        boolean categoryExists = false;
         for (int i = 0; i < questions.size(); i++) {
             if (input.contains(questions.get(i).getCategory().toLowerCase())) {
                 category = questions.get(i).getCategory();
-                categoryExists = true;
+                return true;
             } else {
-                categoryExists = false;
+                return false;
             }
         }
-        return categoryExists;
+        return false;
     }
 
     /**
