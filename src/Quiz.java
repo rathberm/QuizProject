@@ -13,11 +13,13 @@ public class Quiz {
 
     private String name;
     private String answer;
+    private String category;
 
     public Quiz() {
+        initQuestions();
         setName(queryUser("Hallo, wie heißt du?"));
         validateName(getName());
-        initQuestions();
+
         output();
 
         right = 0;
@@ -26,12 +28,31 @@ public class Quiz {
     }
 
     /**
+     * Überprüft ob Fragen zu der eingegebenen Kategorie exisitieren
+     *
+     * @param input
+     * @return True wenn ja, false wenn nein
+     */
+    private boolean checkCategory(String input) {
+        boolean categoryExists = false;
+        for (int i = 0; i < questions.size(); i++) {
+            if (input.contains(questions.get(i).getCategory().toLowerCase())) {
+                category = questions.get(i).getCategory();
+                categoryExists = true;
+            } else {
+                categoryExists = false;
+            }
+        }
+        return categoryExists;
+    }
+
+    /**
      * Legt die Fragen Objekte an und fügt sie der Liste hinzu
      */
     private void initQuestions() {
-        q1 = new Question("Wie hoch ist der Eifelturm? ", "300");
-        q2 = new Question("Was ist die Hauptstadt von Schweden?", "Stockholm");
-        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush");
+        q1 = new Question("Wie hoch ist der Eifelturm? ", "300", "Geographie");
+        q2 = new Question("Was ist die Hauptstadt von Schweden?", "Stockholm", "Geographie");
+        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush", "Geographie");
         questions.add(q1);
         questions.add(q2);
         questions.add(q3);
@@ -41,24 +62,45 @@ public class Quiz {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        for (int i = 0; i < questions.size(); i++) {
-            Question q = questions.get(i);
-            System.out.println("Frage " + (i + 1) + "/" + questions.size());
-            answer = queryUser(q.getQuestion()).toLowerCase();
-            validateInput(answer);
+        if (checkCategory(queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase())) {
+            System.out.println("Erkannte Kategorie: " + category);
 
-            if (q.validateAnswer(answer)) {
-                System.out.println("Das war richtig, " + name);
-                incRight();
-            } else {
-                System.out.println("Das war leider falsch..");
-                System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
-                incWrong();
+            for (int i = 0; i < questions.size(); i++) {
+                Question q = questions.get(i);
+
+                System.out.println("Frage " + (i + 1) + "/" + questions.size());
+                answer = queryUser(q.getQuestion()).toLowerCase();
+                validateInput(answer);
+
+                if (q.validateAnswer(answer)) {
+                    System.out.println("Das war richtig, " + name);
+                    incRight();
+                } else {
+                    System.out.println("Das war leider falsch..");
+                    System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
+                    incWrong();
+                }
             }
+            System.out.println("Du hast das Quiz beendet.");
+            System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet");
+        } else {
+            System.out.println("Zu dieser Kategorie haben wir leider keine Fragen.");
+            System.exit(0);
         }
-        System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet");
     }
+
+    private int findQuestion(String category) {
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).getCategory().equals(category)) {
+                return i;
+            } else {
+                return -1;
+            }
+
+        }
+        return -1;
+    }
+
 
     /**
      * Überprüft ob der Name nur aus Buchstaben besteht.
@@ -78,7 +120,7 @@ public class Quiz {
 
     private void validateInput(String input) {
         if (input.matches("[A-z\\s0-9]+")) {
-                return;
+            return;
         } else {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
             System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
