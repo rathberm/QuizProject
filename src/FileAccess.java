@@ -13,15 +13,35 @@ public class FileAccess {
      */
     public FileAccess(){
         folderPath = System.getProperty("user.home") + "\\AppData\\Roaming\\QuizProject";
-        getCategories();
+        getQuestionsOfCategorie("C1");
+        firstCheck();
     }
 
     /**
      * Konstruktor, bei welchem ein anderer Dateispeicherort gewählt werden kann
-     * @param folderPath neuer Dateispeicherort
+     * @param pFolderPath neuer Dateispeicherort
      */
     public FileAccess(String pFolderPath){
         folderPath = pFolderPath;
+        firstCheck();
+    }
+
+    /**
+     * Checkt ob der entsprechende Ordner mit den Fragen existiert, falls dieser existiert wird auch überprüft ob überhaupt Kategorien vorhanden sind.
+     */
+    private void firstCheck(){
+        boolean error = false;
+        if (new File(folderPath).exists() == false){
+            error = true;
+        }
+        if (getFilesOfFolder().length == 0){
+            error = true;
+        }
+
+        if (error == true){
+            System.out.println("Error in: FileAccess.firstCheck => Failed");
+            System.exit(0);
+        }
     }
 
     /**
@@ -43,24 +63,68 @@ public class FileAccess {
         return categories;
     }
 
-    public Question getQuestionsOfCategorie(String pCategorie){
-        File file = new File("");
+    /**
+     * Gibt die Fragen zur entsprechenden Kategorie zurück
+     * @param pCategorie Kategorie
+     * @return Fragen zur Kategorie
+     */
+    public Question[] getQuestionsOfCategorie(String pCategorie){
+        ArrayList<String> fileContent = getFileContent(pCategorie);
+        Question[] questions = getQuestionsOfFileContent(fileContent);
+
+        return questions;
+    }
+
+    public void createQuestion(){
+
+    }
+
+    /**
+     * Gibt den Inhalt der Datei zurück, welche mit der entsprechenden Kategorie in relation steht
+     * @param pCategorie Kategorie
+     * @return Dateiinhalt als Array (Zeile für Zeile)
+     */
+    private ArrayList<String> getFileContent(String pCategorie){
+        File file = getFileOfCategorie(pCategorie);
+        ArrayList<String> fileContent = new ArrayList<>();
+
         try(BufferedReader br = new BufferedReader(new FileReader(file))) {
             for(String line; (line = br.readLine()) != null; ) {
-                // process the line.
+                fileContent.add(line);
             }
-            // line is not visible here.
         } catch(Exception e){
             System.out.println("Error in: FileAccess.getQuestionsOfCategorie");
             System.exit(0);
-            return null;
+        }
+        return fileContent;
+    }
+
+    /**
+     * Konvertiert den dateiinhalt zu Objekten des Typs Question
+     * @param fileContent Dateiinhalt
+     * @return Fragenarray
+     */
+    private Question[] getQuestionsOfFileContent(ArrayList<String> fileContent){
+        for (int i = 0; i < fileContent.size(); i++){
+
         }
 
         return null;
     }
 
-    public void createQuestion(){
+    /**
+     * Gibt die Datei zurück, welche zur Kategorie passt
+     * @param pCategorie Kategorie
+     * @return Datei der entsprechenden Kategorie
+     */
+    private File getFileOfCategorie(String pCategorie){
+        for (int i = 0; i < getCategories().length; i++){
+            if (pCategorie.toLowerCase().equals(getCategories()[i].toLowerCase())){
+                return getFilesOfFolder()[i];
+            }
+        }
 
+        return null;
     }
 
     /**
