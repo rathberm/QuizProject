@@ -37,12 +37,21 @@ public class Quiz {
         for (int i = 0; i < questions.size(); i++) {
             if (input.contains(questions.get(i).getCategory().toLowerCase())) {
                 category = questions.get(i).getCategory();
+                System.out.println("ye");
                 return true;
-            } else {
-                return false;
             }
         }
         return false;
+    }
+
+    private int countQuestionsOfCategory(String category) {
+        int count = 0;
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).getCategory().toLowerCase().equals(category.toLowerCase())) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -63,11 +72,13 @@ public class Quiz {
     private void output() {
         if (checkCategory(queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase())) {
             System.out.println("Erkannte Kategorie: " + category);
+            int countQuestions = countQuestionsOfCategory(category);
+            System.out.println("Anzahl der Fragen in dieser Kategorie: " + countQuestions);
 //TODO for schleife darf nur bis anzahl der fragen der jeweiligen Kategorie laufen, nicht bis anzahl aller fragen
-            for (int i = 0; i < questions.size(); i++) {
+            for (int i = 0; i < countQuestions; i++) {
                 Question q = questions.get(findQuestion(category));
 
-                System.out.println("Frage " + (i + 1) + "/" + questions.size());
+                System.out.println("Frage " + (i + 1) + "/" + countQuestions);
                 answer = queryUser(q.getQuestion()).toLowerCase();
                 validateInput(answer);
                 manageAnswer(q);
