@@ -19,7 +19,7 @@ public class Quiz {
         initQuestions();
         setName(queryUser("Hallo, wie heißt du?"));
         validateName(getName());
-
+        printCategorys();
         output();
 
         right = 0;
@@ -52,7 +52,7 @@ public class Quiz {
     private void initQuestions() {
         q1 = new Question("Wie hoch ist der Eifelturm? ", "300", "Geographie");
         q2 = new Question("Was ist die Hauptstadt von Schweden?", "Stockholm", "Geographie");
-        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush", "Geographie");
+        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush", "Politik");
         questions.add(q1);
         questions.add(q2);
         questions.add(q3);
@@ -64,43 +64,47 @@ public class Quiz {
     private void output() {
         if (checkCategory(queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase())) {
             System.out.println("Erkannte Kategorie: " + category);
-
+//TODO for schleife darf nur bis anzahl der fragen der jeweiligen Kategorie laufen, nicht bis anzahl aller fragen
             for (int i = 0; i < questions.size(); i++) {
-                Question q = questions.get(i);
+                Question q = questions.get(findQuestion(category));
 
                 System.out.println("Frage " + (i + 1) + "/" + questions.size());
                 answer = queryUser(q.getQuestion()).toLowerCase();
                 validateInput(answer);
-
-                if (q.validateAnswer(answer)) {
-                    System.out.println("Das war richtig, " + name);
-                    incRight();
-                } else {
-                    System.out.println("Das war leider falsch..");
-                    System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
-                    incWrong();
-                }
+                manageAnswer(q);
             }
             System.out.println("Du hast das Quiz beendet.");
-            System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet");
+            System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
         } else {
             System.out.println("Zu dieser Kategorie haben wir leider keine Fragen.");
             System.exit(0);
         }
     }
 
+    /**
+     * @param q Die Frage die verwaltet werden soll
+     */
+    private void manageAnswer(Question q) {
+        if (q.validateAnswer(answer)) {
+            System.out.println("Das war richtig, " + name);
+            incRight();
+        } else {
+            System.out.println("Das war leider falsch.");
+            System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
+            incWrong();
+        }
+    }
+
     private int findQuestion(String category) {
         for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).getCategory().equals(category)) {
+            Question q = questions.get(i);
+            if (q.getCategory().equals(category) && !q.isAlreadyAnswered()) {
+                q.setAlreadyAnswered(true);
                 return i;
-            } else {
-                return -1;
             }
-
         }
         return -1;
     }
-
 
     /**
      * Überprüft ob der Name nur aus Buchstaben besteht.
@@ -127,6 +131,18 @@ public class Quiz {
 
             System.exit(0);
         }
+    }
+
+    private void printCategorys() {
+        String output = "Du kannst zwischen folgenden Kategorien wählen: ";
+        String addition;
+        for (int i = 0; i < questions.size(); i++) {
+            addition = questions.get(i).getCategory();
+            if (!output.contains(addition)) {
+                output = output + " " + addition;
+            }
+        }
+        System.out.println(output);
     }
 
     /**

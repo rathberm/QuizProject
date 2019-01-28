@@ -1,17 +1,15 @@
-import java.util.ArrayList;
-
 public class Question {
     private String question;
     private String answer;
     private String category;
 
-
-
+    private boolean alreadyAnswered;
 
     public Question(String pQuestion, String pAnswer, String pCategory) {
         this.question = pQuestion;
         this.answer = pAnswer;
         this.category = pCategory;
+        this.alreadyAnswered = false;
     }
 
     /**
@@ -32,8 +30,6 @@ public class Question {
     }
 
 
-
-
     public String getQuestion() {
         return question;
     }
@@ -44,6 +40,14 @@ public class Question {
 
     public String getCategory() {
         return category;
+    }
+
+    public boolean isAlreadyAnswered() {
+        return alreadyAnswered;
+    }
+
+    public void setAlreadyAnswered(boolean alreadyAnswered) {
+        this.alreadyAnswered = alreadyAnswered;
     }
 }
 
