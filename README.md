@@ -3,8 +3,8 @@ rathberm = Moritz Rathberger
 <br>
 newPing = Jan Roth
 <br><br>
-Fragen können im Ordner "questions" gefunden werden.
-1x Datei = 1x Thema
+Fragen können im Ordner "questions" gefunden werden.<br>
+Datei = Thema
 <br>
 Coding:
 <br>

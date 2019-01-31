@@ -8,9 +8,9 @@ public class FileAccess {
      * Standardkonstruktor
      */
     public FileAccess(){
-        folderPath = System.getProperty("user.home") + "\\Desktop\\QuizProject";
+        folderPath = System.getProperty("user.dir") + "\\questions";
         firstCheck();
-        //getQuestionsOfCategorie("Geschichte");
+        //getQuestionsOfCategorie("bla0");
         createQuestion("bla0", "bla1", "bla2", "bla3");
     }
 
@@ -28,6 +28,9 @@ public class FileAccess {
      */
     private void firstCheck(){
         boolean error = false;
+        if (folderPath.isEmpty() || folderPath.equals("") || folderPath == null){
+            error = true;
+        }
         if (new File(folderPath).exists() == false){
             error = true;
         }
@@ -67,7 +70,7 @@ public class FileAccess {
      */
     public Question[] getQuestionsOfCategorie(String pCategorie){
         ArrayList<String> fileContent = getFileContent(pCategorie);
-        Question[] questions = getQuestionsOfFileContent(fileContent);
+        Question[] questions = getQuestionsOfFileContent(fileContent, pCategorie);
 
         return questions;
     }
@@ -76,17 +79,20 @@ public class FileAccess {
      * Erstellt einen neuen Eintrag mit einer neuen Frage
      */
     public void createQuestion(String pCategorie, String pQuestion, String pAnswerWords, String pAnswerSentence){
-        File file = getFileOfCategorie(pCategorie);
-        System.out.println(file.getAbsolutePath());
         try{
+            File file = getFileOfCategorie(pCategorie);
             if (file == null){
-                System.out.println("!create File!");
                 file = new File(folderPath + "\\" + pCategorie + ".txt");
                 file.createNewFile();
+
+                FileWriter fw = new FileWriter(file, true);
+                fw.write( "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
+                fw.close();
+            } else {
+                FileWriter fw = new FileWriter(file, true);
+                fw.write( System.lineSeparator() + "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
+                fw.close();
             }
-            FileWriter fw = new FileWriter(file, true);
-            fw.write( System.lineSeparator() + "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
-            fw.close();
         } catch (Exception e){
             System.out.println("Error in: FileAccess.createQuestion");
             System.exit(0);
@@ -120,16 +126,27 @@ public class FileAccess {
      * @param fileContent Dateiinhalt
      * @return Fragenarray
      */
-    private Question[] getQuestionsOfFileContent(ArrayList<String> fileContent){
+    private Question[] getQuestionsOfFileContent(ArrayList<String> fileContent, String pCategorie){
+        ArrayList<Question> questions = new ArrayList<>();
+        String question = "";
+        String answer = "";
+        String[] answerWords = new String[]{""};
+        int rightAnswered = 0;
+        int questioned = 0;
+
         for (int i = 0; i < fileContent.size(); i++){
             if (i % 4 == 0){ //Zeile 1
-                System.out.println(getRightAnswers(fileContent.get(i)) + " / " + getQuestioned(fileContent.get(i)));
-                System.out.println(getQuestion(fileContent.get(i)));
+                question = getQuestion(fileContent.get(i));
+                rightAnswered = getRightAnswers(fileContent.get(i));
+                questioned = getQuestioned(fileContent.get(i));
+
             } else if (i % 4 == 1){ //Zeile 2
-                System.out.println(fileContent.get(i));
+                answerWords = fileContent.get(i).split(" ");
             } else if (i % 4 == 2){ //Zeile 3
-                System.out.println( fileContent.get(i));
-            } else { } //leerzeile
+                answer = fileContent.get(i);
+            } else { //leerzeile
+                questions.add(new Question(pCategorie, question, answerWords, answer, rightAnswered, questioned));
+            }
         }
 
         return null;

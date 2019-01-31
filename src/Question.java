@@ -6,7 +6,7 @@ public class Question {
 
     private boolean alreadyAnswered;
 
-    public Question(String pQuestion, String[] pAnswerWord, String pAnswer, String pCategory) {
+    public Question(String pCategory, String pQuestion, String[] pAnswerWord, String pAnswer, int rightAnswered, int questioned) {
         this.question = pQuestion;
         this.answerWord = pAnswerWord;
         this.answer = pAnswer;

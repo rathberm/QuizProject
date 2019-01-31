@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        //new Quiz();
-        new FileAccess();
+        new Quiz();
+        //new FileAccess();
     }
 }
