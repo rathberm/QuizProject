@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class FileAccess {
@@ -12,7 +10,8 @@ public class FileAccess {
     public FileAccess(){
         folderPath = System.getProperty("user.home") + "\\Desktop\\QuizProject";
         firstCheck();
-        getQuestionsOfCategorie("Geschichte");
+        //getQuestionsOfCategorie("Geschichte");
+        createQuestion("bla0", "bla1", "bla2", "bla3");
     }
 
     /**
@@ -76,7 +75,23 @@ public class FileAccess {
     /**
      * Erstellt einen neuen Eintrag mit einer neuen Frage
      */
-    public void createQuestion(){
+    public void createQuestion(String pCategorie, String pQuestion, String pAnswerWords, String pAnswerSentence){
+        File file = getFileOfCategorie(pCategorie);
+        System.out.println(file.getAbsolutePath());
+        try{
+            if (file == null){
+                System.out.println("!create File!");
+                file = new File(folderPath + "\\" + pCategorie + ".txt");
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file, true);
+            fw.write( System.lineSeparator() + "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
+            fw.close();
+        } catch (Exception e){
+            System.out.println("Error in: FileAccess.createQuestion");
+            System.exit(0);
+            return;
+        }
 
     }
 
