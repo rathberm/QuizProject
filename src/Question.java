@@ -1,12 +1,14 @@
 public class Question {
     private String question;
+    private String[] answerWord;
     private String answer;
     private String category;
 
     private boolean alreadyAnswered;
 
-    public Question(String pQuestion, String pAnswer, String pCategory) {
+    public Question(String pQuestion, String[] pAnswerWord, String pAnswer, String pCategory) {
         this.question = pQuestion;
+        this.answerWord = pAnswerWord;
         this.answer = pAnswer;
         this.category = pCategory;
         this.alreadyAnswered = false;

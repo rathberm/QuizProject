@@ -58,9 +58,9 @@ public class Quiz {
      * Legt die Fragen Objekte an und fügt sie der Liste hinzu
      */
     private void initQuestions() {
-        q1 = new Question("Wie hoch ist der Eifelturm? ", "300", "Geographie");
-        q2 = new Question("Was ist die Hauptstadt von Schweden?", "Stockholm", "Geographie");
-        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", "Bush", "Politik");
+        q1 = new Question("Wie hoch ist der Eifelturm? ", new String[]{"300"},"Er ist 300 Meter hoch.", "Geographie");
+        q2 = new Question("Was ist die Hauptstadt von Schweden?", new String[]{"Stockholm"},"Die richtige Antwort wäre Stockholm.", "Geographie");
+        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", new String[]{"Bush"},"Es war Bush.", "Politik");
         questions.add(q1);
         questions.add(q2);
         questions.add(q3);
