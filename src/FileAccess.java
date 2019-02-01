@@ -11,7 +11,7 @@ public class FileAccess {
         folderPath = System.getProperty("user.dir") + "\\questions";
         firstCheck();
         //getQuestionsOfCategorie("bla0");
-        createQuestion("bla0", "bla1", "bla2", "bla3");
+        //createQuestion("bla0", "bla1", "bla2", "bla3");
     }
 
     /**
@@ -139,7 +139,6 @@ public class FileAccess {
                 question = getQuestion(fileContent.get(i));
                 rightAnswered = getRightAnswers(fileContent.get(i));
                 questioned = getQuestioned(fileContent.get(i));
-
             } else if (i % 4 == 1){ //Zeile 2
                 answerWords = fileContent.get(i).split(" ");
             } else if (i % 4 == 2){ //Zeile 3
@@ -149,7 +148,7 @@ public class FileAccess {
             }
         }
 
-        return null;
+        return questions.toArray(new Question[questions.size()]);
     }
 
     private String getQuestion(String str) {
