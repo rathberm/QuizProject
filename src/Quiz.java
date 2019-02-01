@@ -1,12 +1,10 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
-public class Quiz {
-    private Question q1;
-    private Question q2;
-    private Question q3;
+public class Quiz extends FileAccess {
 
-    private ArrayList<Question> questions = new ArrayList<>();
+
+    private Question questions[];
 
     private int right;
     private int wrong;
@@ -16,15 +14,19 @@ public class Quiz {
     private String category;
 
     public Quiz() {
-        initQuestions();
+
+
+        right = 0;
+        wrong = 0;
+        answer = "";
+
         setName(queryUser("Hallo, wie heißt du?"));
         validateName(getName());
         printCategorys();
         output();
 
-        right = 0;
-        wrong = 0;
-        answer = "";
+       // questions = getQuestionsOfCategorie(category);
+
     }
 
     /**
@@ -33,6 +35,7 @@ public class Quiz {
      * @param input
      * @return True wenn ja, false wenn nein
      */
+    /*
     private boolean checkCategory(String input) {
         for (int i = 0; i < questions.size(); i++) {
             if (input.contains(questions.get(i).getCategory().toLowerCase())) {
@@ -43,53 +46,28 @@ public class Quiz {
         }
         return false;
     }
+    */
 
-    private int countQuestionsOfCategory(String category) {
-        int count = 0;
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).getCategory().toLowerCase().equals(category.toLowerCase())) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /**
-     * Legt die Fragen Objekte an und fügt sie der Liste hinzu
-     */
-    private void initQuestions() {
-        /*q1 = new Question("Wie hoch ist der Eifelturm? ", new String[]{"300"},"Er ist 300 Meter hoch.", "Geographie");
-        q2 = new Question("Was ist die Hauptstadt von Schweden?", new String[]{"Stockholm"},"Die richtige Antwort wäre Stockholm.", "Geographie");
-        q3 = new Question("Wer war amerikanischer Präsident vor Obama?", new String[]{"Bush"},"Es war Bush.", "Politik");
-        questions.add(q1);
-        questions.add(q2);
-        questions.add(q3);*/
-    }
 
     /**
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        if (checkCategory(queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase())) {
+        category = queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase();
+        questions = getQuestionsOfCategorie(category);
             System.out.println("Erkannte Kategorie: " + category);
-            int countQuestions = countQuestionsOfCategory(category);
-            System.out.println("Anzahl der Fragen in dieser Kategorie: " + countQuestions);
-//TODO for schleife darf nur bis anzahl der fragen der jeweiligen Kategorie laufen, nicht bis anzahl aller fragen
-            for (int i = 0; i < countQuestions; i++) {
-                Question q = questions.get(findQuestion(category));
-
-                System.out.println("Frage " + (i + 1) + "/" + countQuestions);
-                answer = queryUser(q.getQuestion()).toLowerCase();
+            System.out.println("Anzahl der Fragen in dieser Kategorie: " + questions.length);
+            for (int i = 0; i < questions.length; i++) {
+                Question q = questions[i];
+                System.out.println("Frage " + (i + 1) + "/" + questions.length);
+                answer = queryUser(q.toString());
                 validateInput(answer);
                 manageAnswer(q);
             }
             System.out.println("Du hast das Quiz beendet.");
             System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
-        } else {
-            System.out.println("Zu dieser Kategorie haben wir leider keine Fragen.");
-            System.exit(0);
         }
-    }
+
 
     /**
      * @param q Die Frage die verwaltet werden soll
@@ -103,17 +81,6 @@ public class Quiz {
             System.out.println("Die richtige Antwort wäre " + q.getAnswer() + " gewesen.");
             incWrong();
         }
-    }
-
-    private int findQuestion(String category) {
-        for (int i = 0; i < questions.size(); i++) {
-            Question q = questions.get(i);
-            if (q.getCategory().equals(category) && !q.isAlreadyAnswered()) {
-                q.setAlreadyAnswered(true);
-                return i;
-            }
-        }
-        return -1;
     }
 
     /**
@@ -143,15 +110,13 @@ public class Quiz {
         }
     }
 
+    /**
+     * Gibt alle Kategorien in der Konsole aus
+     */
     private void printCategorys() {
-        String output = "Du kannst zwischen folgenden Kategorien wählen: ";
-        String addition;
-        for (int i = 0; i < questions.size(); i++) {
-            addition = questions.get(i).getCategory();
-            if (!output.contains(addition)) {
-                output = output + " " + addition;
-            }
-        }
+        String[] categories = getCategories();
+        String output = "Du kannst zwischen folgenden Kategorien wählen: " + Arrays.toString(categories);
+
         System.out.println(output);
     }
 
@@ -168,27 +133,27 @@ public class Quiz {
         return input;
     }
 
-    public String getName() {
+    private String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 
-    public int getRight() {
+    private int getRight() {
         return right;
     }
 
-    public void incRight() {
+    private void incRight() {
         this.right++;
     }
 
-    public int getWrong() {
+    private int getWrong() {
         return wrong;
     }
 
-    public void incWrong() {
+    private void incWrong() {
         this.wrong++;
     }
 }
