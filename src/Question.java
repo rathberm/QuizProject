@@ -40,10 +40,6 @@ public class Question {
         return answer;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public boolean isAlreadyAnswered() {
         return alreadyAnswered;
     }
