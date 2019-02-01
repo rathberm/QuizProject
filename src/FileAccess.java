@@ -68,11 +68,9 @@ public class FileAccess {
      * @param pCategorie Kategorie
      * @return Fragen zur Kategorie
      */
-    public Question[] getQuestionsOfCategorie(String pCategorie){
+    public ArrayList<Question> getQuestionsOfCategorie(String pCategorie){
         ArrayList<String> fileContent = getFileContent(pCategorie);
-        Question[] questions = getQuestionsOfFileContent(fileContent, pCategorie);
-
-        return questions;
+        return getQuestionsOfFileContent(fileContent, pCategorie);
     }
 
     /**
@@ -126,7 +124,7 @@ public class FileAccess {
      * @param fileContent Dateiinhalt
      * @return Fragenarray
      */
-    private Question[] getQuestionsOfFileContent(ArrayList<String> fileContent, String pCategorie){
+    private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> fileContent, String pCategorie){
         ArrayList<Question> questions = new ArrayList<>();
         String question = "";
         String answer = "";
@@ -148,7 +146,7 @@ public class FileAccess {
             }
         }
 
-        return questions.toArray(new Question[questions.size()]);
+        return questions;
     }
 
     private String getQuestion(String str) {
