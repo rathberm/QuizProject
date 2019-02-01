@@ -1,8 +1,6 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Quiz extends FileAccess {
-
 
     private Question questions[];
 
@@ -15,58 +13,36 @@ public class Quiz extends FileAccess {
 
     public Quiz() {
 
-
         right = 0;
         wrong = 0;
         answer = "";
 
         setName(queryUser("Hallo, wie heißt du?"));
         validateName(getName());
-        printCategorys();
+        printCategories();
         output();
-
-       // questions = getQuestionsOfCategorie(category);
-
     }
-
-    /**
-     * Überprüft ob Fragen zu der eingegebenen Kategorie exisitieren
-     *
-     * @param input
-     * @return True wenn ja, false wenn nein
-     */
-    /*
-    private boolean checkCategory(String input) {
-        for (int i = 0; i < questions.size(); i++) {
-            if (input.contains(questions.get(i).getCategory().toLowerCase())) {
-                category = questions.get(i).getCategory();
-                System.out.println("ye");
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-
 
     /**
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        category = queryUser("Zu welcher Kategorie willst du Fragen beantworten?").toLowerCase();
+        category = queryUser("Zu welcher Kategorie willst du Fragen beantworten?");
         questions = getQuestionsOfCategorie(category);
-            System.out.println("Erkannte Kategorie: " + category);
-            System.out.println("Anzahl der Fragen in dieser Kategorie: " + questions.length);
-            for (int i = 0; i < questions.length; i++) {
-                Question q = questions[i];
-                System.out.println("Frage " + (i + 1) + "/" + questions.length);
-                answer = queryUser(q.toString());
-                validateInput(answer);
-                manageAnswer(q);
-            }
-            System.out.println("Du hast das Quiz beendet.");
-            System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
+        System.out.println(questions[1]);
+
+        System.out.println("Erkannte Kategorie: " + category);
+        System.out.println("Anzahl der Fragen in dieser Kategorie: " + questions.length);
+        for (int i = 0; i < questions.length; i++) {
+            Question q = questions[i];
+            System.out.println("Frage " + (i + 1) + "/" + questions.length);
+            answer = queryUser(q.toString());
+            validateInput(answer);
+            manageAnswer(q);
         }
+        System.out.println("Du hast das Quiz beendet.");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
+    }
 
 
     /**
@@ -86,11 +62,11 @@ public class Quiz extends FileAccess {
     /**
      * Überprüft ob der Name nur aus Buchstaben besteht.
      *
-     * @param name Der vom User eingegebene Name
+     * @param pName Der vom User eingegebene Name
      * @return True wenn der Name ok ist, false wenn nicht
      */
-    private boolean validateName(String name) {
-        if (name.matches("[A-z]+")) {
+    private boolean validateName(String pName) {
+        if (pName.matches("[A-z]+")) {
             return true;
         } else {
             System.out.println("Dies ist kein Name!! Namen bestehen aus einem Wort und nur Buchstaben.");
@@ -99,8 +75,8 @@ public class Quiz extends FileAccess {
         }
     }
 
-    private void validateInput(String input) {
-        if (input.matches("[A-z\\s0-9]+")) {
+    private void validateInput(String pInput) {
+        if (pInput.matches("[A-z\\s0-9]+")) {
             return;
         } else {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
@@ -113,9 +89,12 @@ public class Quiz extends FileAccess {
     /**
      * Gibt alle Kategorien in der Konsole aus
      */
-    private void printCategorys() {
+    private void printCategories() {
         String[] categories = getCategories();
-        String output = "Du kannst zwischen folgenden Kategorien wählen: " + Arrays.toString(categories);
+        String output = "Du kannst zwischen folgenden Kategorien wählen: ";
+        for (String element : categories) {
+            output = output + element + " ";
+        }
 
         System.out.println(output);
     }
@@ -123,12 +102,12 @@ public class Quiz extends FileAccess {
     /**
      * Fragt den User mit der Nachricht "Text" nach einem Input
      *
-     * @param text Die Nachricht mit der nach dem Input gefragt wird
+     * @param pText Die Nachricht mit der nach dem Input gefragt wird
      * @return Die Eingabe des Users
      */
-    private String queryUser(String text) {
+    private String queryUser(String pText) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(text);
+        System.out.println(pText);
         String input = scanner.nextLine();
         return input;
     }
@@ -137,8 +116,8 @@ public class Quiz extends FileAccess {
         return name;
     }
 
-    private void setName(String name) {
-        this.name = name;
+    private void setName(String pName) {
+        this.name = pName;
     }
 
     private int getRight() {
