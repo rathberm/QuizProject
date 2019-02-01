@@ -1,8 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Quiz extends FileAccess {
 
-    private Question questions[];
+
+    //private Question questions[];
+    private ArrayList<Question> questions = new ArrayList<>();
 
     private int right;
     private int wrong;
@@ -11,6 +14,9 @@ public class Quiz extends FileAccess {
     private String answer;
     private String category;
 
+    /**
+     * Standardkonstruktor
+     */
     public Quiz() {
 
         right = 0;
@@ -29,13 +35,13 @@ public class Quiz extends FileAccess {
     private void output() {
         category = queryUser("Zu welcher Kategorie willst du Fragen beantworten?");
         questions = getQuestionsOfCategorie(category);
-        System.out.println(questions[1]);
+        System.out.println(questions.get(1));
 
         System.out.println("Erkannte Kategorie: " + category);
-        System.out.println("Anzahl der Fragen in dieser Kategorie: " + questions.length);
-        for (int i = 0; i < questions.length; i++) {
-            Question q = questions[i];
-            System.out.println("Frage " + (i + 1) + "/" + questions.length);
+        System.out.println("Anzahl der Fragen in dieser Kategorie: " + questions.size());
+        for (int i = 0; i < questions.size(); i++) {
+            Question q = questions.get(i);
+            System.out.println("Frage " + (i + 1) + "/" + questions.size());
             answer = queryUser(q.toString());
             validateInput(answer);
             manageAnswer(q);
@@ -95,7 +101,6 @@ public class Quiz extends FileAccess {
         for (String element : categories) {
             output = output + element + " ";
         }
-
         System.out.println(output);
     }
 
