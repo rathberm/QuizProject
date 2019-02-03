@@ -68,6 +68,7 @@ public class FileAccess {
      * @param pCategorie Kategorie
      * @return Fragen zur Kategorie
      */
+    //TODO Fix: The returned ArrayList holds only 9 elements instead of 10
     public ArrayList<Question> getQuestionsOfCategorie(String pCategorie){
         ArrayList<String> fileContent = getFileContent(pCategorie);
         return getQuestionsOfFileContent(fileContent, pCategorie);

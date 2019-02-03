@@ -9,12 +9,12 @@ public class Quiz extends FileAccess {
     private int wrong;
 
     private String answer;
-    private String category;
 
     /**
      * Standardkonstruktor
      */
     public Quiz() {
+
         right = 0;
         wrong = 0;
         answer = "";
@@ -30,19 +30,24 @@ public class Quiz extends FileAccess {
         firstCheck();
         printCategories();
 
-        category = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
+        String category;
+        category = askCategory();
         questions = getQuestionsOfCategorie(category);
 
         System.out.println("Erkannte Kategorie: " + category);
         System.out.println("Anzahl der Fragen in dieser Kategorie: " + (questions.size() + 1));
 
-        for (int i = 0; i < questions.size() + 1; i++) {
+        for (int i = 0; i < questions.size(); i++) {
+            System.out.println(i);
+
+            //TODO Arraylist is only 9 elements long
             Question q = questions.get(i);
             System.out.println("Frage " + (i + 1) + "/" + (questions.size() + 1));
             answer = queryUser(q.getQuestion());
             validateInput(answer);
             manageAnswer(q);
         }
+
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
@@ -67,9 +72,40 @@ public class Quiz extends FileAccess {
         } else {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
             System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
-
             System.exit(0);
         }
+    }
+
+    /**
+     * Frägt nach der Kategorie und überprüft ob die Eingabe eine Kategorie ist.
+     *
+     * @return Die eingegebene Kategorie.
+     */
+    private String askCategory() {
+        String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
+        if (isCategory(cat)) {
+            return cat;
+        } else {
+            System.out.println("Das ist keine gültige Kategorie, versuchs nochmal.");
+            return askCategory();
+        }
+    }
+
+    /**
+     * Überprüft ob der übergebene String eine Kategorie ist oder nicht
+     *
+     * @param pCategory
+     * @return True wenn ja, false wenn nicht.
+     */
+    private boolean isCategory(String pCategory) {
+        boolean r = false;
+        String[] categories = getCategories();
+        for (int i = 0; i < categories.length; i++) {
+            if (pCategory.equals(categories[i])) {
+                r = true;
+            }
+        }
+        return r;
     }
 
     /**
