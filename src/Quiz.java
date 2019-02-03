@@ -47,7 +47,6 @@ public class Quiz extends FileAccess {
             validateInput(answer);
             manageAnswer(q);
         }
-
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
