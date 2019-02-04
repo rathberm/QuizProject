@@ -7,18 +7,24 @@ public class Quiz extends FileAccess {
 
     private int right;
     private int wrong;
+    private int amountQuestions;
 
     private String answer;
+    private String category;
 
     /**
      * Standardkonstruktor
      */
     public Quiz() {
-
         right = 0;
         wrong = 0;
         answer = "";
 
+        System.out.println("Hallo, willkommen bei unserem Quiz!");
+        firstCheck();
+        printCategories();
+        category = askCategory();
+        amountQuestions = askAmount();
         output();
     }
 
@@ -26,29 +32,55 @@ public class Quiz extends FileAccess {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        System.out.println("Hallo, willkommen bei unserem Quiz!");
-        firstCheck();
-        printCategories();
+        boolean reset = false;
 
-        String category;
-        category = askCategory();
         questions = getQuestionsOfCategorie(category);
 
-        System.out.println("Erkannte Kategorie: " + category);
-        System.out.println("Anzahl der Fragen in dieser Kategorie: " + (questions.size() + 1));
-
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(i);
-
+        for (int i = 0; i < amountQuestions; i++) {
+            //Wenn der User mehr Fragen beantworten will als es Fragen in einer Kategorie gibt
+            //wird i zurückgesetzt sobald i einmal bis questions.size durchgelaufen ist
+            if (amountQuestions > questions.size() && i == questions.size() && reset == false) {
+                i = amountQuestions - questions.size();
+                reset = true;
+            }
             //TODO Arraylist is only 9 elements long
             Question q = questions.get(i);
-            System.out.println("Frage " + (i + 1) + "/" + (questions.size() + 1));
+            System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
             validateInput(answer);
             manageAnswer(q);
         }
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
+    }
+
+    private int askAmount() {
+        String lenght;
+        System.out.println("Erkannte Kategorie: " + category);
+        lenght = queryUser("Wie viele Fragen möchtest du beantworten?");
+        return Integer.parseInt(lenght);
+    }
+
+    //Funktioniert noch nicht
+    private ArrayList<Question> mixQuestions() {
+        double r;
+        ArrayList<Question> geschichte = getQuestionsOfCategorie("Geschichte");
+        ArrayList<Question> allgemeinwissen = getQuestionsOfCategorie("Allgemeinwissen");
+        ArrayList<Question> mixed = new ArrayList<>();
+        int cG = 0;
+        int cA = 0;
+        while (cG <= geschichte.size()) {
+            r = Math.random();
+            if (r <= 0.5 && cG <= geschichte.size()) {
+                mixed.add(geschichte.get(cG));
+                cG++;
+            } else if (r >= 0.5 && cA <= allgemeinwissen.size()) {
+                mixed.add(allgemeinwissen.get(cA));
+                cA++;
+            }
+
+        }
+        return mixed;
     }
 
     /**
