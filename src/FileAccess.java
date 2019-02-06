@@ -159,6 +159,11 @@ public class FileAccess {
         return questions;
     }
 
+    /**
+     * gibt die Frage zurück (im format von str, der files)
+     * @param pStr String welcher auszuwerten ist
+     * @return Frage
+     */
     private String getQuestion(String pStr) {
         int qBeginning = -1;
         for (int i = 0; i < pStr.length(); i++) {
@@ -176,6 +181,11 @@ public class FileAccess {
         }
     }
 
+    /**
+     * gibt an, wie oft eine frage richtig beantwortet wurde (im format von str, der files)
+     * @param pStr String welcher auszuwerten ist
+     * @return anzahl richtig beantwortet
+     */
     private int getRightAnswers(String pStr) {
         int qEnd = -1;
         for (int i = 0; i < pStr.length(); i++) {
@@ -199,6 +209,11 @@ public class FileAccess {
         }
     }
 
+    /**
+     * gibt an, wie oft eine frage gestellt wurde (im format von str, der files)
+     * @param pStr String welcher auszuwerten ist
+     * @return anzahl frage gestellt
+     */
     private int getQuestioned(String pStr) {
         int qBeginning = -1;
         for (int i = 0; i < pStr.length(); i++) {
@@ -261,6 +276,12 @@ public class FileAccess {
         }
     }
 
+    /**
+     * Aktualisiert die Fragelisten (dateien) (die beiden parameter der fragen "rightAnswered" und "questioned"
+     * @param pQuestions Arraylist von fragen welche aktualisiert werden sollen
+     * @param pReset Gibt an, ob "rightAnswered" und "questioned", für alle fragen der Arraylist, auf 0 zurück gesetzt werden sollen
+     * @return Gibt an ob die Operation erfolgreich verlaufen ist
+     */
     public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset) {
         boolean succeeded = true;
 
