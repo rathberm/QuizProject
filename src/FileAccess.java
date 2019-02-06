@@ -265,38 +265,27 @@ public class FileAccess {
         boolean succeeded = true;
 
         for (int i = 0; i < pQuestions.size(); i++) {
+            try {
+                File file = getFileOfCategorie(pQuestions.get(i).getCategory());
+                ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
 
-            File file = getFileOfCategorie(pQuestions.get(i).getCategory());
-            ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
-            System.out.println("Inhalt FileContent zuvor");
-            for (int j = 0; j < fileContent.size(); j++) {
-                System.out.println(fileContent.get(j));
-            }
-
-
-            //check if one of the lines of the file contains the question... if so, replace it with the updated line
-            for (int l = 0; l < fileContent.size(); l++) {
-                if (fileContent.get(i).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())) {
-                    System.out.println("Vergleich erfolgreich für: ");
-                    System.out.println(fileContent.get(i) + " == " + pQuestions.get(i).getQuestion());
-                    if (pReset == true) {
-                        fileContent.set(i, "#0/0-" + pQuestions.get(i).getQuestion());
-                    } else {
-                        fileContent.set(i, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
-                        System.out.println("ersetze durch: " + "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
+                //check if one of the lines of the file contains the question... if so, replace it with the updated line
+                for (int l = 0; l < fileContent.size(); l++) {
+                    if (fileContent.get(l).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())) {
+                        if (pReset == true) {
+                            fileContent.set(l, "#0/0-" + pQuestions.get(i).getQuestion());
+                        } else {
+                            fileContent.set(l, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
+                        }
                     }
                 }
-            }
-            try {
+
                 file.delete();
                 file = new File(folderPath + System.getProperty("file.separator") + pQuestions.get(i).getCategory() + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
-
-                System.out.println("Inhalt FileContent danach");
                 for (int l = 0; l < fileContent.size(); l++) {
-                    System.out.println(fileContent.get(l));
                     fw.write(fileContent.get(l) + System.lineSeparator());
                 }
                 fw.close();
@@ -304,9 +293,7 @@ public class FileAccess {
             } catch (Exception e) {
                 System.out.println(e.toString());
                 System.out.println("Error in: FileAccess.changeStatsOfQuestionInCategorie");
-
                 succeeded = false;
-
             }
         }
 
