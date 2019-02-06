@@ -8,7 +8,7 @@ public class FileAccess {
      * Standardkonstruktor
      */
     public FileAccess(){
-        folderPath = System.getProperty("user.dir") + "\\questions";
+        folderPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "questions";
         firstCheck();
         //getQuestionsOfCategorie("bla0");
         //createQuestion("bla0", "bla1", "bla2", "bla3");
@@ -81,7 +81,7 @@ public class FileAccess {
         try{
             File file = getFileOfCategorie(pCategorie);
             if (file == null){
-                file = new File(folderPath + "\\" + pCategorie + ".txt");
+                file = new File(folderPath + System.getProperty("file.separator") +  pCategorie + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
@@ -122,10 +122,10 @@ public class FileAccess {
 
     /**
      * Konvertiert den dateiinhalt zu Objekten des Typs Question
-     * @param fileContent Dateiinhalt
+     * @param pFileContent Dateiinhalt
      * @return Fragenarray
      */
-    private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> fileContent, String pCategorie){
+    private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> pFileContent, String pCategorie){
         ArrayList<Question> questions = new ArrayList<>();
         String question = "";
         String answer = "";
@@ -133,15 +133,15 @@ public class FileAccess {
         int rightAnswered = 0;
         int questioned = 0;
 
-        for (int i = 0; i < fileContent.size(); i++){
+        for (int i = 0; i < pFileContent.size(); i++){
             if (i % 4 == 0){ //Zeile 1
-                question = getQuestion(fileContent.get(i));
-                rightAnswered = getRightAnswers(fileContent.get(i));
-                questioned = getQuestioned(fileContent.get(i));
+                question = getQuestion(pFileContent.get(i));
+                rightAnswered = getRightAnswers(pFileContent.get(i));
+                questioned = getQuestioned(pFileContent.get(i));
             } else if (i % 4 == 1){ //Zeile 2
-                answerWords = fileContent.get(i).split(" ");
+                answerWords = pFileContent.get(i).split(" ");
             } else if (i % 4 == 2){ //Zeile 3
-                answer = fileContent.get(i);
+                answer = pFileContent.get(i);
             } else { //leerzeile
                 questions.add(new Question(pCategorie, question, answerWords, answer, rightAnswered, questioned));
             }
@@ -151,10 +151,10 @@ public class FileAccess {
         return questions;
     }
 
-    private String getQuestion(String str) {
+    private String getQuestion(String pStr) {
         int qBeginning = -1;
-        for(int i = 0; i < str.length(); i++){
-            if (str.charAt(i) == '-'){
+        for(int i = 0; i < pStr.length(); i++){
+            if (pStr.charAt(i) == '-'){
                 qBeginning = i + 1;
             }
         }
@@ -164,14 +164,14 @@ public class FileAccess {
             System.exit(0);
             return null;
         } else {
-            return str.substring(qBeginning);
+            return pStr.substring(qBeginning);
         }
     }
 
-    private int getRightAnswers(String str){
+    private int getRightAnswers(String pStr){
         int qEnd = -1;
-        for(int i = 0; i < str.length(); i++){
-            if (str.charAt(i) == '/'){
+        for(int i = 0; i < pStr.length(); i++){
+            if (pStr.charAt(i) == '/'){
                 qEnd = i;
             }
         }
@@ -182,7 +182,7 @@ public class FileAccess {
             return -1;
         } else {
             try {
-                return Integer.parseInt(str.substring(1, qEnd));
+                return Integer.parseInt(pStr.substring(1, qEnd));
             } catch (Exception e){
                 System.out.println("Error in: FileAccess.getRightAnswer[2]");
                 System.exit(0);
@@ -191,17 +191,17 @@ public class FileAccess {
         }
     }
 
-    private int getQuestioned(String str){
+    private int getQuestioned(String pStr){
         int qBeginning = -1;
-        for(int i = 0; i < str.length(); i++){
-            if (str.charAt(i) == '/'){
+        for(int i = 0; i < pStr.length(); i++){
+            if (pStr.charAt(i) == '/'){
                 qBeginning = i + 1;
             }
         }
 
         int qEnd = -1;
-        for(int i = 0; i < str.length(); i++){
-            if (str.charAt(i) == '-'){
+        for(int i = 0; i < pStr.length(); i++){
+            if (pStr.charAt(i) == '-'){
                 qEnd = i;
             }
         }
@@ -212,7 +212,7 @@ public class FileAccess {
             return -1;
         } else {
             try {
-                return Integer.parseInt(str.substring(qBeginning, qEnd));
+                return Integer.parseInt(pStr.substring(qBeginning, qEnd));
             } catch (Exception e){
                 System.out.println("Error in: FileAccess.getQuestioned[2]");
                 System.exit(0);
@@ -249,5 +249,13 @@ public class FileAccess {
             System.exit(0);
             return null;
         }
+    }
+
+    public boolean changeStatsOfQuestionInCategorie(){
+        boolean succeeded = true;
+
+
+
+        return succeeded;
     }
 }
