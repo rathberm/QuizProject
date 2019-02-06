@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Quiz extends FileAccess {
@@ -33,8 +34,11 @@ public class Quiz extends FileAccess {
      */
     private void output() {
         boolean reset = false;
+        int count = 1;
 
         questions = getQuestionsOfCategorie(category);
+        //Sortiert die Fragen in der Liste zufällig neu
+        Collections.shuffle(questions);
 
         for (int i = 0; i < amountQuestions; i++) {
             //Wenn der User mehr Fragen beantworten will als es Fragen in einer Kategorie gibt
@@ -45,10 +49,11 @@ public class Quiz extends FileAccess {
             }
             //TODO Arraylist is only 9 elements long
             Question q = questions.get(i);
-            System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
+            System.out.println("Frage " + count + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
             validateInput(answer);
             manageAnswer(q);
+            count++;
         }
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
@@ -78,7 +83,6 @@ public class Quiz extends FileAccess {
                 mixed.add(allgemeinwissen.get(cA));
                 cA++;
             }
-
         }
         return mixed;
     }
