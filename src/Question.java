@@ -3,15 +3,14 @@ public class Question {
     private String[] answerWord;
     private String answer;
     private String category;
+    private int rightAnswered;
+    private int questioned;
 
-    private boolean alreadyAnswered;
-
-    public Question(String pCategory, String pQuestion, String[] pAnswerWord, String pAnswer, int rightAnswered, int questioned) {
+    public Question(String pCategory, String pQuestion, String[] pAnswerWord, String pAnswer, int pRightAnswered, int pQuestioned) {
         this.question = pQuestion;
         this.answerWord = pAnswerWord;
         this.answer = pAnswer;
         this.category = pCategory;
-        this.alreadyAnswered = false;
     }
 
     /**
@@ -42,13 +41,15 @@ public class Question {
         return answer;
     }
 
-    public boolean isAlreadyAnswered() {
-        return alreadyAnswered;
+    public void increaseQuestioned(){
+        questioned++;
     }
 
-    public void setAlreadyAnswered(boolean alreadyAnswered) {
-        this.alreadyAnswered = alreadyAnswered;
-    }
+    public void increaseRightAnswered(){ rightAnswered++; }
+
+    public int getQuestioned(){ return questioned; }
+
+    public int getRightAnswered(){ return rightAnswered; }
 }
 
 

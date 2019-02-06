@@ -251,10 +251,12 @@ public class FileAccess {
         }
     }
 
-    public boolean changeStatsOfQuestionInCategorie(){
+    public boolean changeStatsOfQuestionInCategorie(ArrayList<Question> questions){
         boolean succeeded = true;
 
-
+        for (int i = 0; i < questions; i ++){
+            questions.get(i)
+        }
 
         return succeeded;
     }
