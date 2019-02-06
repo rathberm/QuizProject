@@ -12,7 +12,7 @@ public class Quiz {
 
     private String answer;
     private String category;
-    private FileAccess fileaccess;
+    private FileAccess fileAccess;
 
     /**
      * Standardkonstruktor
@@ -21,9 +21,10 @@ public class Quiz {
         right = 0;
         wrong = 0;
         answer = "";
+        fileAccess = new FileAccess();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
-        fileaccess = new FileAccess();
+        fileAccess = new FileAccess();
         firstCheck();
         printCategories();
         category = askCategory();
@@ -38,7 +39,7 @@ public class Quiz {
         boolean reset = false;
         int count = 1;
 
-        questions = fileaccess.getQuestionsOfCategorie(category);
+        questions = fileAccess.getQuestionsOfCategorie(category);
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
@@ -65,14 +66,26 @@ public class Quiz {
         String lenght;
         System.out.println("Erkannte Kategorie: " + category);
         lenght = queryUser("Wie viele Fragen möchtest du beantworten?");
-        return Integer.parseInt(lenght);
+
+        if (!lenght.matches("[-0-9]+")) {
+            System.out.println("Das ist keine Zahl, versuchs nochmal.");
+            return askAmount();
+        } else if (Integer.parseInt(lenght) > 25) {
+            System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 25 ein.");
+            return askAmount();
+        } else if (Integer.parseInt(lenght) <= 0) {
+            System.out.println("Diese Zahl ist zu klein, gib eine Zahl größer null ein.");
+            return askAmount();
+        } else {
+            return Integer.parseInt(lenght);
+        }
     }
 
     //Funktioniert noch nicht
     private ArrayList<Question> mixQuestions() {
         double r;
-        ArrayList<Question> geschichte = fileaccess.getQuestionsOfCategorie("Geschichte");
-        ArrayList<Question> allgemeinwissen = fileaccess.getQuestionsOfCategorie("Allgemeinwissen");
+        ArrayList<Question> geschichte = fileAccess.getQuestionsOfCategorie("Geschichte");
+        ArrayList<Question> allgemeinwissen = fileAccess.getQuestionsOfCategorie("Allgemeinwissen");
         ArrayList<Question> mixed = new ArrayList<>();
         int cG = 0;
         int cA = 0;
@@ -136,7 +149,7 @@ public class Quiz {
      */
     private boolean isCategory(String pCategory) {
         boolean r = false;
-        String[] categories = fileaccess.getCategories();
+        String[] categories = fileAccess.getCategories();
         for (int i = 0; i < categories.length; i++) {
             if (pCategory.equals(categories[i])) {
                 r = true;
@@ -149,7 +162,7 @@ public class Quiz {
      * Gibt alle Kategorien in der Konsole aus
      */
     private void printCategories() {
-        String[] categories = fileaccess.getCategories();
+        String[] categories = fileAccess.getCategories();
         String output = "Du kannst zwischen folgenden Kategorien wählen: ";
         for (String element : categories) {
             output = output + element + " ";
