@@ -251,32 +251,32 @@ public class FileAccess {
         }
     }
 
-    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> questions, boolean reset){
+    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset){
         boolean succeeded = true;
 
-        for (int i = 0; i < questions.size(); i ++){
+        for (int i = 0; i < pQuestions.size(); i ++){
             try{
-                File file = getFileOfCategorie(questions.get(i).getCategory());
-                ArrayList<String> fileContent = getFileContent(questions.get(i).getCategory());
+                File file = getFileOfCategorie(pQuestions.get(i).getCategory());
+                ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
 
                 //check if one of the lines of the file contains the question... if so, replace it with the updated line
                 for (int l = 0; l < fileContent.size(); l++){
-                    if (fileContent.get(i).toLowerCase().contains(questions.get(i).getQuestion().toLowerCase())){
-                        if (reset == true){
-                            fileContent.set(i, "#0/0-" + questions.get(i).getQuestion());
+                    if (fileContent.get(i).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())){
+                        if (pReset == true){
+                            fileContent.set(i, "#0/0-" + pQuestions.get(i).getQuestion());
                         } else {
-                            fileContent.set(i, "#" + questions.get(i).getRightAnswered() + "/" + questions.get(i).getQuestioned() + "-" + questions.get(i).getQuestion());
+                            fileContent.set(i, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
                         }
                     }
                 }
 
                 file.delete();
-                file = new File(folderPath + System.getProperty("file.separator") +  questions.get(i).getCategory() + ".txt");
+                file = new File(folderPath + System.getProperty("file.separator") +  pQuestions.get(i).getCategory() + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
 
-                for (int l = 0; l < questions.size(); l++){
+                for (int l = 0; l < pQuestions.size(); l++){
                     fw.write(fileContent.get(i) + System.lineSeparator());
                 }
                 fw.close();
