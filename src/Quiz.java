@@ -39,18 +39,16 @@ public class Quiz {
         boolean reset = false;
         int count = 1;
 
-        questions = fileAccess.getQuestionsOfCategorie(category);
+        if (category.equals("zufaellig")) {
+            questions = mixQuestions();
+        } else {
+            questions = fileAccess.getQuestionsOfCategorie(category);
+        }
+
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
         for (int i = 0; i < amountQuestions; i++) {
-            //Wenn der User mehr Fragen beantworten will als es Fragen in einer Kategorie gibt
-            //wird i zurückgesetzt sobald i einmal bis questions.size durchgelaufen ist
-            if (amountQuestions > questions.size() && i == questions.size() && reset == false) {
-                i = amountQuestions - questions.size();
-                reset = true;
-            }
-            //TODO Arraylist is only 9 elements long
             Question q = questions.get(i);
             System.out.println("Frage " + count + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
@@ -63,43 +61,36 @@ public class Quiz {
     }
 
     private int askAmount() {
-        String lenght;
+        String length;
         System.out.println("Erkannte Kategorie: " + category);
-        lenght = queryUser("Wie viele Fragen möchtest du beantworten?");
+        length = queryUser("Wie viele Fragen möchtest du beantworten?");
 
-        if (!lenght.matches("[-0-9]+")) {
+        if (!length.matches("[-0-9]+")) {
             System.out.println("Das ist keine Zahl, versuchs nochmal.");
             return askAmount();
-        } else if (Integer.parseInt(lenght) > 25) {
+        } else if (Integer.parseInt(length) > 25) {
             System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 25 ein.");
             return askAmount();
-        } else if (Integer.parseInt(lenght) <= 0) {
+        } else if (Integer.parseInt(length) <= 0) {
             System.out.println("Diese Zahl ist zu klein, gib eine Zahl größer null ein.");
             return askAmount();
         } else {
-            return Integer.parseInt(lenght);
+            return Integer.parseInt(length);
         }
     }
 
-    //Funktioniert noch nicht
+    /**
+     * Verbindet alle Kategorien in einer Liste
+     *
+     * @return Eine Liste die alle Fragen der Kategorien Geschichte und Allgemeinwissen enthält
+     */
     private ArrayList<Question> mixQuestions() {
-        double r;
-        ArrayList<Question> geschichte = fileAccess.getQuestionsOfCategorie("Geschichte");
-        ArrayList<Question> allgemeinwissen = fileAccess.getQuestionsOfCategorie("Allgemeinwissen");
-        ArrayList<Question> mixed = new ArrayList<>();
-        int cG = 0;
-        int cA = 0;
-        while (cG <= geschichte.size()) {
-            r = Math.random();
-            if (r <= 0.5 && cG <= geschichte.size()) {
-                mixed.add(geschichte.get(cG));
-                cG++;
-            } else if (r >= 0.5 && cA <= allgemeinwissen.size()) {
-                mixed.add(allgemeinwissen.get(cA));
-                cA++;
-            }
-        }
-        return mixed;
+        ArrayList<Question> allQuestions = fileAccess.getQuestionsOfCategorie("Geschichte");
+        ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie("Allgemeinwissen");
+        allQuestions.addAll(notAllQuestions);
+        Collections.shuffle(allQuestions);
+
+        return allQuestions;
     }
 
     /**
@@ -151,7 +142,7 @@ public class Quiz {
         boolean r = false;
         String[] categories = fileAccess.getCategories();
         for (int i = 0; i < categories.length; i++) {
-            if (pCategory.equals(categories[i])) {
+            if (pCategory.equals(categories[i]) || pCategory.equals("zufaellig")) {
                 r = true;
             }
         }
@@ -167,6 +158,7 @@ public class Quiz {
         for (String element : categories) {
             output = output + element + " ";
         }
+        output = output + "Zufaellig";
         System.out.println(output);
     }
 
@@ -218,5 +210,8 @@ public class Quiz {
 
     private void incWrong() {
         this.wrong++;
+    }
+    public ArrayList<Question> getQuestions() {
+        return questions;
     }
 }

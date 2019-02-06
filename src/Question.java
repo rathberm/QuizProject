@@ -17,11 +17,11 @@ public class Question {
     /**
      * Vergleicht die Antwort mit der Lösung
      *
-     * @param input Die Antwort des Benutzers
+     * @param pInput Die Antwort des Benutzers
      * @return True, wenn die Antwort richtig ist, false wenn nicht
      */
-    public boolean validateAnswer(String input) {
-        String[] arr = input.split(" ");
+    public boolean validateAnswer(String pInput) {
+        String[] arr = pInput.split(" ");
         boolean rightAnswer = false;
         for (int j = 0; j < answerWord.length; j++) {
             for (int i = 0; i < arr.length; i++) {
