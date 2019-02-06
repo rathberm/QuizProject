@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Quiz extends FileAccess {
+public class Quiz {
 
     private ArrayList<Question> questions = new ArrayList<>();
 
@@ -12,6 +12,7 @@ public class Quiz extends FileAccess {
 
     private String answer;
     private String category;
+    private FileAccess fileaccess;
 
     /**
      * Standardkonstruktor
@@ -27,6 +28,8 @@ public class Quiz extends FileAccess {
         category = askCategory();
         amountQuestions = askAmount();
         output();
+
+        fileaccess = new FileAccess();
     }
 
     /**
@@ -36,7 +39,7 @@ public class Quiz extends FileAccess {
         boolean reset = false;
         int count = 1;
 
-        questions = getQuestionsOfCategorie(category);
+        questions = fileaccess.getQuestionsOfCategorie(category);
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
@@ -69,8 +72,8 @@ public class Quiz extends FileAccess {
     //Funktioniert noch nicht
     private ArrayList<Question> mixQuestions() {
         double r;
-        ArrayList<Question> geschichte = getQuestionsOfCategorie("Geschichte");
-        ArrayList<Question> allgemeinwissen = getQuestionsOfCategorie("Allgemeinwissen");
+        ArrayList<Question> geschichte = fileaccess.getQuestionsOfCategorie("Geschichte");
+        ArrayList<Question> allgemeinwissen = fileaccess.getQuestionsOfCategorie("Allgemeinwissen");
         ArrayList<Question> mixed = new ArrayList<>();
         int cG = 0;
         int cA = 0;
@@ -134,7 +137,7 @@ public class Quiz extends FileAccess {
      */
     private boolean isCategory(String pCategory) {
         boolean r = false;
-        String[] categories = getCategories();
+        String[] categories = fileaccess.getCategories();
         for (int i = 0; i < categories.length; i++) {
             if (pCategory.equals(categories[i])) {
                 r = true;
@@ -147,7 +150,7 @@ public class Quiz extends FileAccess {
      * Gibt alle Kategorien in der Konsole aus
      */
     private void printCategories() {
-        String[] categories = getCategories();
+        String[] categories = fileaccess.getCategories();
         String output = "Du kannst zwischen folgenden Kategorien wählen: ";
         for (String element : categories) {
             output = output + element + " ";
