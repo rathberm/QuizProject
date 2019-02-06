@@ -6,11 +6,11 @@ Der zweite Weltkrieg begann 1939.
 1945
 Der zweite Weltkrieg endete 1945.
 
-#0/0-Welcher Praesident der USA wurde in seinem Auto erschossen?
+#1/1-Welcher Praesident der USA wurde in seinem Auto erschossen?
 John Kennedy
 John F. Kennedy wurde 1939 in seinem Auto erschossen.
 
-#0/0-Wann erklaerten die United States of America Ihre unabhaengigkeit?
+#1/1-Wann erklaerten die United States of America Ihre unabhaengigkeit?
 1776
 Die United States of America erklaerten 1776 Ihre unabhaengigkeit.
 
@@ -18,7 +18,7 @@ Die United States of America erklaerten 1776 Ihre unabhaengigkeit.
 1990
 Das Internet wurde 1990 erfunden.
 
-#0/0-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
+#0/1-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
 1945
 Die Atombomben wurden 1945 auf Hirsohima und Nagasaki geworfen.
 
@@ -30,7 +30,7 @@ Der erste Weltkrieg begann am 28.07.1914
 1918
 Der erste Weltkrieg endete am 11.11.1918
 
-#0/0-Wann entdeckte Christopher Columbus die "Neue Welt"?
+#0/1-Wann entdeckte Christopher Columbus die "Neue Welt"?
 1492
 Christopher Columbus entdeckte 1492 Amerika.
 

@@ -58,6 +58,7 @@ public class Quiz {
             manageAnswer(q);
             count++;
         }
+        //Updated die Einträge in der .txt
         fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
     }
 
@@ -110,6 +111,7 @@ public class Quiz {
         System.out.println("Du kannst einer bereits bestehenden Kategorie Fragen hinzufügen oder eine neue Kategorie erstellen.");
         System.out.println("Bestehende Kategorien: ");
 
+        //Gibt die Namen der Kategorien aus
         for (String element : categories) {
             output = output + element + " ";
         }

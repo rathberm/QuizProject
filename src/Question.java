@@ -43,19 +43,25 @@ public class Question {
         return answer;
     }
 
-    public String getCategory(){
+    public String getCategory() {
         return category;
     }
 
-    public void increaseQuestioned(){
+    public void increaseQuestioned() {
         questioned++;
     }
 
-    public void increaseRightAnswered(){ rightAnswered++; }
+    public void increaseRightAnswered() {
+        rightAnswered++;
+    }
 
-    public int getQuestioned(){ return questioned; }
+    public int getQuestioned() {
+        return questioned;
+    }
 
-    public int getRightAnswered(){ return rightAnswered; }
+    public int getRightAnswered() {
+        return rightAnswered;
+    }
 }
 
 
