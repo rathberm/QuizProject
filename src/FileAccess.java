@@ -262,10 +262,13 @@ public class FileAccess {
                 //check if one of the lines of the file contains the question... if so, replace it with the updated line
                 for (int l = 0; l < fileContent.size(); l++){
                     if (fileContent.get(i).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())){
+                        System.out.println("Vergleich erfolgreich für: ");
+                        System.out.println(fileContent.get(i) + " == " + pQuestions.get(i).getQuestion());
                         if (pReset == true){
                             fileContent.set(i, "#0/0-" + pQuestions.get(i).getQuestion());
                         } else {
                             fileContent.set(i, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
+                            System.out.println("ersetze durch: " + "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
                         }
                     }
                 }
@@ -276,7 +279,9 @@ public class FileAccess {
 
                 FileWriter fw = new FileWriter(file, true);
 
+                System.out.println("gesamter inhalt: ");
                 for (int l = 0; l < fileContent.size(); l++){
+                    System.out.println(fileContent.get(i) + System.lineSeparator());
                     fw.write(fileContent.get(i) + System.lineSeparator());
                 }
                 fw.close();
