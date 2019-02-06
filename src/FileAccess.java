@@ -251,7 +251,7 @@ public class FileAccess {
         }
     }
 
-    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> questions){
+    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> questions, boolean reset){
         boolean succeeded = true;
 
         for (int i = 0; i < questions.size(); i ++){
@@ -262,7 +262,11 @@ public class FileAccess {
                 //check if one of the lines of the file contains the question... if so, replace it with the updated line
                 for (int l = 0; l < fileContent.size(); l++){
                     if (fileContent.get(i).toLowerCase().contains(questions.get(i).getQuestion().toLowerCase())){
-                        fileContent.set(i, "#" + questions.get(i).getRightAnswered() + "/" + questions.get(i).getQuestioned() + "-" + questions.get(i).getQuestion());
+                        if (reset == true){
+                            fileContent.set(i, "#0/0-" + questions.get(i).getQuestion());
+                        } else {
+                            fileContent.set(i, "#" + questions.get(i).getRightAnswered() + "/" + questions.get(i).getQuestioned() + "-" + questions.get(i).getQuestion());
+                        }
                     }
                 }
 
@@ -273,7 +277,7 @@ public class FileAccess {
                 FileWriter fw = new FileWriter(file, true);
 
                 for (int l = 0; l < questions.size(); l++){
-                    fw.write(fileContent.get(i));
+                    fw.write(fileContent.get(i) + System.lineSeparator());
                 }
                 fw.close();
 
