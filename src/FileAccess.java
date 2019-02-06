@@ -276,13 +276,13 @@ public class FileAccess {
 
                 FileWriter fw = new FileWriter(file, true);
 
-                for (int l = 0; l < pQuestions.size(); l++){
+                for (int l = 0; l < fileContent.size(); l++){
                     fw.write(fileContent.get(i) + System.lineSeparator());
                 }
                 fw.close();
 
             } catch (Exception e){
-                System.out.println("Error in: changeStatsOfQuestionInCategorie");
+                System.out.println("Error in: FileAccess.changeStatsOfQuestionInCategorie");
                 succeeded = false;
             }
         }
