@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Quiz {
 
     private ArrayList<Question> questions = new ArrayList<>();
+    private String categories[];
 
     private int right;
     private int wrong;
@@ -22,14 +23,17 @@ public class Quiz {
         wrong = 0;
         answer = "";
         fileAccess = new FileAccess();
+        String categories[] = fileAccess.getCategories();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
-        fileAccess = new FileAccess();
         firstCheck();
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
         output();
+
+        System.out.println("Du hast das Quiz beendet.");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
 
     /**
@@ -44,20 +48,18 @@ public class Quiz {
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
         }
-
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
         for (int i = 0; i < amountQuestions; i++) {
             Question q = questions.get(i);
+
             System.out.println("Frage " + count + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
             validateInput(answer);
             manageAnswer(q);
             count++;
         }
-        System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
 
     private int askAmount() {
@@ -68,8 +70,8 @@ public class Quiz {
         if (!length.matches("[-0-9]+")) {
             System.out.println("Das ist keine Zahl, versuchs nochmal.");
             return askAmount();
-        } else if (Integer.parseInt(length) > 25) {
-            System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 25 ein.");
+        } else if (Integer.parseInt(length) > 10) {
+            System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 10 ein.");
             return askAmount();
         } else if (Integer.parseInt(length) <= 0) {
             System.out.println("Diese Zahl ist zu klein, gib eine Zahl größer null ein.");
@@ -79,15 +81,52 @@ public class Quiz {
         }
     }
 
+    private void createOwnQuestion() {
+        String pCategory;
+        String question;
+        String answerWord;
+        String answerSentence;
+        String output = "";
+        String[] categories = fileAccess.getCategories();
+        System.out.println("Ok, zuerst brauchen wir eine Kategorie.");
+        System.out.println("Du kannst einer bereits bestehenden Kategorie Fragen hinzufügen oder eine neue Kategorie erstellen.");
+        System.out.println("Bestehende Kategorien: ");
+
+        for (String element : categories) {
+            output = output + element + " ";
+        }
+        System.out.println(output);
+        pCategory = queryUser("Wunschkategorie: ");
+        question = queryUser("Bitte formuliere jetzt deine Frage: ");
+        answerWord = queryUser("Jetzt musst du die Antwort für deine Frage eingeben: ");
+        answerSentence = queryUser("Bitte gib jetzt den Antwortsatz ein: ");
+
+        String str = queryUser("Willst du die Frage " + question + " der Kategorie " + pCategory + " mit der Antwort " + answerWord + " und dem Antwortsatz " + answerSentence + " wirklich speichern?(ja/nein)").toLowerCase();
+
+        if (str.equals("ja") && str.matches("[A-z]+")) {
+            fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
+            System.out.println("Das Programm muss nun neu gestartet werden.");
+            System.exit(0);
+        } else {
+            System.out.println("Ok, dann wird das Programm beendet.");
+            System.exit(0);
+        }
+
+    }
+
     /**
      * Verbindet alle Kategorien in einer Liste
      *
      * @return Eine Liste die alle Fragen der Kategorien Geschichte und Allgemeinwissen enthält
      */
     private ArrayList<Question> mixQuestions() {
+        String[] categories = fileAccess.getCategories();
         ArrayList<Question> allQuestions = fileAccess.getQuestionsOfCategorie("Geschichte");
-        ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie("Allgemeinwissen");
-        allQuestions.addAll(notAllQuestions);
+
+        for (int i = 0; i < categories.length; i++) {
+            ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie(categories[i]);
+            allQuestions.addAll(notAllQuestions);
+        }
         Collections.shuffle(allQuestions);
 
         return allQuestions;
@@ -166,13 +205,15 @@ public class Quiz {
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
     private void firstCheck() {
-        String answer = queryUser("Willst du Fragen beantworten?(Ja/Nein)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten oder selber Fragen erstellen??(Ja/Nein/Erstellen)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("ja")) {
                 System.out.println("Ok, los gehts!");
             } else if (answer.contains("nein")) {
                 System.out.println("Ok, das Programm wird beendet.");
                 System.exit(0);
+            } else if (answer.contains("erstellen")) {
+                createOwnQuestion();
             } else {
                 System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
                 firstCheck();
@@ -211,6 +252,7 @@ public class Quiz {
     private void incWrong() {
         this.wrong++;
     }
+
     public ArrayList<Question> getQuestions() {
         return questions;
     }
