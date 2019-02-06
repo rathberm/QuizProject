@@ -8,7 +8,7 @@ public class FileAccess {
      * Standardkonstruktor
      */
     public FileAccess(){
-        folderPath = System.getProperty("user.dir") + "\\questions";
+        folderPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "questions";
         firstCheck();
         //getQuestionsOfCategorie("bla0");
         //createQuestion("bla0", "bla1", "bla2", "bla3");
@@ -81,7 +81,7 @@ public class FileAccess {
         try{
             File file = getFileOfCategorie(pCategorie);
             if (file == null){
-                file = new File(folderPath + "\\" + pCategorie + ".txt");
+                file = new File(folderPath + System.getProperty("file.separator") +  pCategorie + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
@@ -249,5 +249,13 @@ public class FileAccess {
             System.exit(0);
             return null;
         }
+    }
+
+    public boolean changeStatsOfQuestionInCategorie(){
+        boolean succeeded = true;
+
+
+
+        return succeeded;
     }
 }
