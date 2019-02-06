@@ -122,7 +122,7 @@ public class FileAccess {
 
     /**
      * Konvertiert den dateiinhalt zu Objekten des Typs Question
-     * @param fileContent Dateiinhalt
+     * @param pFileContent Dateiinhalt
      * @return Fragenarray
      */
     private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> pFileContent, String pCategorie){
