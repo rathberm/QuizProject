@@ -30,6 +30,9 @@ public class Quiz {
         category = askCategory();
         amountQuestions = askAmount();
         output();
+
+        System.out.println("Du hast das Quiz beendet.");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
 
     /**
@@ -44,20 +47,18 @@ public class Quiz {
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
         }
-
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
         for (int i = 0; i < amountQuestions; i++) {
             Question q = questions.get(i);
+
             System.out.println("Frage " + count + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
             validateInput(answer);
             manageAnswer(q);
             count++;
         }
-        System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
     }
 
     private int askAmount() {
@@ -68,8 +69,8 @@ public class Quiz {
         if (!length.matches("[-0-9]+")) {
             System.out.println("Das ist keine Zahl, versuchs nochmal.");
             return askAmount();
-        } else if (Integer.parseInt(length) > 25) {
-            System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 25 ein.");
+        } else if (Integer.parseInt(length) > 10) {
+            System.out.println("Die Zahl ist zu groß, gib eine Zahl zwischen 0 und 10 ein.");
             return askAmount();
         } else if (Integer.parseInt(length) <= 0) {
             System.out.println("Diese Zahl ist zu klein, gib eine Zahl größer null ein.");
@@ -79,15 +80,20 @@ public class Quiz {
         }
     }
 
+
     /**
      * Verbindet alle Kategorien in einer Liste
      *
      * @return Eine Liste die alle Fragen der Kategorien Geschichte und Allgemeinwissen enthält
      */
     private ArrayList<Question> mixQuestions() {
+        String[] categories = fileAccess.getCategories();
         ArrayList<Question> allQuestions = fileAccess.getQuestionsOfCategorie("Geschichte");
-        ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie("Allgemeinwissen");
-        allQuestions.addAll(notAllQuestions);
+
+        for (int i = 0; i < categories.length; i++) {
+            ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie(categories[i]);
+            allQuestions.addAll(notAllQuestions);
+        }
         Collections.shuffle(allQuestions);
 
         return allQuestions;
@@ -211,6 +217,7 @@ public class Quiz {
     private void incWrong() {
         this.wrong++;
     }
+
     public ArrayList<Question> getQuestions() {
         return questions;
     }
