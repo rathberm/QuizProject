@@ -12,7 +12,9 @@ public class Quiz {
 
     private String answer;
     private String category;
+
     private FileAccess fileAccess;
+    private ShortAnswers shortAnswers;
 
     /**
      * Standardkonstruktor
@@ -22,12 +24,14 @@ public class Quiz {
         wrong = 0;
         answer = "";
         fileAccess = new FileAccess();
+        shortAnswers = new ShortAnswers();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
         firstCheck();
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
+        shortAnswers.query("Capital of Germany");
         output();
 
         System.out.println("Du hast das Quiz beendet.");
