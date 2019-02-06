@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Quiz {
 
     private ArrayList<Question> questions = new ArrayList<>();
+    private String categories[];
 
     private int right;
     private int wrong;
@@ -22,9 +23,9 @@ public class Quiz {
         wrong = 0;
         answer = "";
         fileAccess = new FileAccess();
+        String categories[] = fileAccess.getCategories();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
-        fileAccess = new FileAccess();
         firstCheck();
         printCategories();
         category = askCategory();
@@ -80,6 +81,38 @@ public class Quiz {
         }
     }
 
+    private void createOwnQuestion() {
+        String pCategory;
+        String question;
+        String answerWord;
+        String answerSentence;
+        String output = "";
+        String[] categories = fileAccess.getCategories();
+        System.out.println("Ok, zuerst brauchen wir eine Kategorie.");
+        System.out.println("Du kannst einer bereits bestehenden Kategorie Fragen hinzufügen oder eine neue Kategorie erstellen.");
+        System.out.println("Bestehende Kategorien: ");
+
+        for (String element : categories) {
+            output = output + element + " ";
+        }
+        System.out.println(output);
+        pCategory = queryUser("Wunschkategorie: ");
+        question = queryUser("Bitte formuliere jetzt deine Frage: ");
+        answerWord = queryUser("Jetzt musst du die Antwort für deine Frage eingeben: ");
+        answerSentence = queryUser("Bitte gib jetzt den Antwortsatz ein: ");
+
+        String str = queryUser("Willst du die Frage " + question + " der Kategorie " + pCategory + " mit der Antwort " + answerWord + " und dem Antwortsatz " + answerSentence + " wirklich speichern?(ja/nein)").toLowerCase();
+
+        if (str.equals("ja") && str.matches("[A-z]+")) {
+            fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
+            System.out.println("Das Programm muss nun neu gestartet werden.");
+            System.exit(0);
+        } else {
+            System.out.println("Ok, dann wird das Programm beendet.");
+            System.exit(0);
+        }
+
+    }
 
     /**
      * Verbindet alle Kategorien in einer Liste
@@ -172,13 +205,15 @@ public class Quiz {
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
     private void firstCheck() {
-        String answer = queryUser("Willst du Fragen beantworten?(Ja/Nein)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten oder selber Fragen erstellen??(Ja/Nein/Erstellen)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("ja")) {
                 System.out.println("Ok, los gehts!");
             } else if (answer.contains("nein")) {
                 System.out.println("Ok, das Programm wird beendet.");
                 System.exit(0);
+            } else if (answer.contains("erstellen")) {
+                createOwnQuestion();
             } else {
                 System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
                 firstCheck();
