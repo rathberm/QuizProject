@@ -23,13 +23,12 @@ public class Quiz {
         answer = "";
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
+        fileaccess = new FileAccess();
         firstCheck();
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
         output();
-
-        fileaccess = new FileAccess();
     }
 
     /**
