@@ -258,6 +258,11 @@ public class FileAccess {
             try{
                 File file = getFileOfCategorie(pQuestions.get(i).getCategory());
                 ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
+                System.out.println("Inhalt FileContent zuvor");
+                for (int j = 0; j < fileContent.size(); i ++){
+                    System.out.println(fileContent.get(i));
+                }
+
 
                 //check if one of the lines of the file contains the question... if so, replace it with the updated line
                 for (int l = 0; l < fileContent.size(); l++){
@@ -279,9 +284,9 @@ public class FileAccess {
 
                 FileWriter fw = new FileWriter(file, true);
 
-                System.out.println("gesamter inhalt: ");
+                System.out.println("Inhalt FileContent danach");
                 for (int l = 0; l < fileContent.size(); l++){
-                    System.out.println(fileContent.get(i) + System.lineSeparator());
+                    System.out.println(fileContent.get(i));
                     fw.write(fileContent.get(i) + System.lineSeparator());
                 }
                 fw.close();
