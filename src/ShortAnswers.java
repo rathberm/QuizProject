@@ -2,14 +2,14 @@ import com.wolfram.alpha.*;
 
 public class ShortAnswers {
 
+
     private static String appid;
 
     public ShortAnswers() {
         appid = "6GHRKV-R85EJLHKVY";
     }
 
-    public void query(String pInput){
-
+    public void query(String pInput) {
 
 
         // The WAEngine is a factory for creating WAQuery objects,
@@ -27,13 +27,9 @@ public class ShortAnswers {
         // Create the query.
         WAQuery query = engine.createQuery();
 
-        // Set properties of the query.
         query.setInput(pInput);
 
         try {
-            // For educational purposes, print out the URL we are about to send:
-            System.out.println("Query URL:");
-            System.out.println(engine.toURL(query));
 
             // This sends the URL to the Wolfram|Alpha server, gets the XML result
             // and parses it into an object hierarchy held by the WAQueryResult object.
@@ -45,9 +41,8 @@ public class ShortAnswers {
                 System.out.println("  error code: " + queryResult.getErrorCode());
                 System.out.println("  error message: " + queryResult.getErrorMessage());
             } else if (!queryResult.isSuccess()) {
-                System.out.println("Query was not understood; no results available.");
+                System.out.println("Die Eingabe wurde nicht verstanden oder dazu gibt es keine Antwort.");
             } else {
-                // Got a result.
                 System.out.println("Successful query. Pods follow:\n");
                 for (WAPod pod : queryResult.getPods()) {
                     if (!pod.isError()) {
@@ -71,7 +66,6 @@ public class ShortAnswers {
         }
 
     }
-
 
 }
 

@@ -20,3 +20,5 @@ H
 questions/Geschichte.txt,4\f\4f8f2a51b36f5b253a6d7249b3eaeafc31e5e74e
 ?
 QuizProject.iml,6\e\6e63c7fc6257fe08ef9af65d70430d7777bd4fda
+E
+src/ShortAnswers.java,5\d\5dc37430fa49e644e656e02fd4ae995c0b2ce6a0

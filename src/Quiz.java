@@ -31,7 +31,6 @@ public class Quiz {
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
-        shortAnswers.query("Capital of Germany");
         output();
 
         System.out.println("Du hast das Quiz beendet.");
@@ -70,15 +69,19 @@ public class Quiz {
      * @param q Die Frage die verwaltet werden soll
      */
     private void manageAnswer(Question q) {
-        q.increaseQuestioned();
-        if (q.validateAnswer(answer)) {
-            System.out.println("Das war richtig.");
-            q.increaseRightAnswered();
-            incRight();
+        if (answer.equals("exit")) {
+            firstCheck();
         } else {
-            System.out.println("Das war leider falsch.");
-            System.out.println(q.getAnswer());
-            incWrong();
+            q.increaseQuestioned();
+            if (q.validateAnswer(answer)) {
+                System.out.println("Das war richtig.");
+                q.increaseRightAnswered();
+                incRight();
+            } else {
+                System.out.println("Das war leider falsch.");
+                System.out.println(q.getAnswer());
+                incWrong();
+            }
         }
     }
 
@@ -86,6 +89,9 @@ public class Quiz {
         String length;
         System.out.println("Erkannte Kategorie: " + category);
         length = queryUser("Wie viele Fragen möchtest du beantworten?");
+        if (length.equals("exit")) {
+            firstCheck();
+        }
 
         if (!length.matches("[-0-9]+")) {
             System.out.println("Das ist keine Zahl, versuchs nochmal.");
@@ -98,6 +104,26 @@ public class Quiz {
             return askAmount();
         } else {
             return Integer.parseInt(length);
+        }
+    }
+
+
+    /**
+     * Frägt nach der Kategorie und überprüft ob die Eingabe eine Kategorie ist.
+     *
+     * @return Die eingegebene Kategorie.
+     */
+    private String askCategory() {
+        String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
+
+        if (cat.equals("exit")) {
+            firstCheck();
+        }
+        if (isCategory(cat)) {
+            return cat;
+        } else {
+            System.out.println("Das ist keine gültige Kategorie, versuchs nochmal.");
+            return askCategory();
         }
     }
 
@@ -129,11 +155,11 @@ public class Quiz {
 
         if (str.equals("ja") && str.matches("[A-z]+")) {
             fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
-            System.out.println("Das Programm muss nun neu gestartet werden.");
-            System.exit(0);
+            System.out.println("Frage erfolgreich gespeichert.");
+            firstCheck();
         } else {
-            System.out.println("Ok, dann wird das Programm beendet.");
-            System.exit(0);
+            System.out.println("Ok, Frage erstellen wird abgebrochen.");
+            firstCheck();
         }
     }
 
@@ -162,21 +188,6 @@ public class Quiz {
             System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
             System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
             System.exit(0);
-        }
-    }
-
-    /**
-     * Frägt nach der Kategorie und überprüft ob die Eingabe eine Kategorie ist.
-     *
-     * @return Die eingegebene Kategorie.
-     */
-    private String askCategory() {
-        String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
-        if (isCategory(cat)) {
-            return cat;
-        } else {
-            System.out.println("Das ist keine gültige Kategorie, versuchs nochmal.");
-            return askCategory();
         }
     }
 
@@ -214,15 +225,20 @@ public class Quiz {
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
     private void firstCheck() {
-        String answer = queryUser("Willst du Fragen beantworten oder selber Fragen erstellen??(Ja/Nein/Erstellen)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen oder nichts von alldem??(beantworten/Erstellen/stellen/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
-            if (answer.contains("ja")) {
+            if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
-            } else if (answer.contains("nein")) {
+                System.out.println("Du kommst durch die Eingabe von \"exit\" wieder zurueck zur Auswahl.");
+            } else if (answer.contains("nichts")) {
                 System.out.println("Ok, das Programm wird beendet.");
                 System.exit(0);
             } else if (answer.contains("erstellen")) {
                 createOwnQuestion();
+            } else if (answer.contains("stellen")) {
+                askWolfram();
+            } else if (answer.equals("exit")) {
+                System.exit(0);
             } else {
                 System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
                 firstCheck();
@@ -230,6 +246,21 @@ public class Quiz {
         } else {
             System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
             firstCheck();
+        }
+    }
+
+    private void askWolfram() {
+        System.out.println();
+        System.out.println("---------------------------------------------------------------------------------");
+        System.out.println("Jetzt kannst du Fragen stellen die von Wolfram Alpha SEHR ausfürlich beantwortet werden.");
+        System.out.println("Aber Achtung: Du musst die fragen auf Englisch stellen!");
+        System.out.println("Alternativ kommst du durch die eingabe von \"exit\" wieder zurueck zur Auswahl.");
+        String ans = queryUser("Was möchtest du wissen?");
+        if (ans.equals("exit")) {
+            firstCheck();
+        } else {
+            shortAnswers.query(ans);
+            askWolfram();
         }
     }
 
