@@ -146,6 +146,7 @@ public class FileAccess {
                 questions.add(new Question(pCategorie, question, answerWords, answer, rightAnswered, questioned));
             }
         }
+        questions.add(new Question(pCategorie, question, answerWords, answer, rightAnswered, questioned));
 
         return questions;
     }
