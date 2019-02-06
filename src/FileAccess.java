@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class FileAccess {
@@ -7,7 +10,7 @@ public class FileAccess {
     /**
      * Standardkonstruktor
      */
-    public FileAccess(){
+    public FileAccess() {
         folderPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "questions";
         firstCheck();
         //getQuestionsOfCategorie("bla0");
@@ -16,9 +19,10 @@ public class FileAccess {
 
     /**
      * Konstruktor, bei welchem ein anderer Dateispeicherort gewählt werden kann
+     *
      * @param pFolderPath neuer Dateispeicherort
      */
-    public FileAccess(String pFolderPath){
+    public FileAccess(String pFolderPath) {
         folderPath = pFolderPath;
         firstCheck();
     }
@@ -26,19 +30,19 @@ public class FileAccess {
     /**
      * Checkt ob der entsprechende Ordner mit den Fragen existiert, falls dieser existiert wird auch überprüft ob überhaupt Kategorien vorhanden sind.
      */
-    private void firstCheck(){
+    private void firstCheck() {
         boolean error = false;
-        if (folderPath.isEmpty() || folderPath.equals("") || folderPath == null){
+        if (folderPath.isEmpty() || folderPath.equals("") || folderPath == null) {
             error = true;
         }
-        if (new File(folderPath).exists() == false){
+        if (new File(folderPath).exists() == false) {
             error = true;
         }
-        if (getFilesOfFolder().length == 0){
+        if (getFilesOfFolder().length == 0) {
             error = true;
         }
 
-        if (error == true){
+        if (error == true) {
             System.out.println("Error in: FileAccess.firstCheck => Failed");
             System.exit(0);
         }
@@ -46,14 +50,15 @@ public class FileAccess {
 
     /**
      * Gibt eine Liste der bereits existierenden / verfügbaren Kategorien zurück
+     *
      * @return liste an zu wählenden Kategorien
      */
-    public String[] getCategories(){
+    public String[] getCategories() {
         File[] files = getFilesOfFolder();
         String[] categories = new String[files.length];
 
-        for (int i = 0; i < files.length; i++){
-            if (files[i].getName().contains(".")){
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].getName().contains(".")) {
                 categories[i] = files[i].getName().replaceFirst("[.][^.]+$", "");
             } else {
                 categories[i] = files[i].getName();
@@ -65,11 +70,12 @@ public class FileAccess {
 
     /**
      * Gibt die Fragen zur entsprechenden Kategorie zurück
+     *
      * @param pCategorie Kategorie
      * @return Fragen zur Kategorie
      */
     //TODO Fix: The returned ArrayList holds only 9 elements instead of 10
-    public ArrayList<Question> getQuestionsOfCategorie(String pCategorie){
+    public ArrayList<Question> getQuestionsOfCategorie(String pCategorie) {
         ArrayList<String> fileContent = getFileContent(pCategorie);
         return getQuestionsOfFileContent(fileContent, pCategorie);
     }
@@ -77,22 +83,22 @@ public class FileAccess {
     /**
      * Erstellt einen neuen Eintrag mit einer neuen Frage
      */
-    public void createQuestion(String pCategorie, String pQuestion, String pAnswerWords, String pAnswerSentence){
-        try{
+    public void createQuestion(String pCategorie, String pQuestion, String pAnswerWords, String pAnswerSentence) {
+        try {
             File file = getFileOfCategorie(pCategorie);
-            if (file == null){
-                file = new File(folderPath + System.getProperty("file.separator") +  pCategorie + ".txt");
+            if (file == null) {
+                file = new File(folderPath + System.getProperty("file.separator") + pCategorie + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
-                fw.write( "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
+                fw.write("#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
                 fw.close();
             } else {
                 FileWriter fw = new FileWriter(file, true);
-                fw.write( System.lineSeparator() + "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
+                fw.write(System.lineSeparator() + "#0/0-" + pQuestion + System.lineSeparator() + pAnswerWords + System.lineSeparator() + pAnswerSentence + System.lineSeparator());
                 fw.close();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error in: FileAccess.createQuestion");
             System.exit(0);
             return;
@@ -102,18 +108,19 @@ public class FileAccess {
 
     /**
      * Gibt den Inhalt der Datei zurück, welche mit der entsprechenden Kategorie in relation steht
+     *
      * @param pCategorie Kategorie
      * @return Dateiinhalt als Array (Zeile für Zeile)
      */
-    private ArrayList<String> getFileContent(String pCategorie){
+    private ArrayList<String> getFileContent(String pCategorie) {
         File file = getFileOfCategorie(pCategorie);
         ArrayList<String> fileContent = new ArrayList<>();
 
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-            for(String line; (line = br.readLine()) != null; ) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            for (String line; (line = br.readLine()) != null; ) {
                 fileContent.add(line);
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error in: FileAccess.getQuestionsOfCategorie");
             System.exit(0);
         }
@@ -122,10 +129,11 @@ public class FileAccess {
 
     /**
      * Konvertiert den dateiinhalt zu Objekten des Typs Question
+     *
      * @param pFileContent Dateiinhalt
      * @return Fragenarray
      */
-    private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> pFileContent, String pCategorie){
+    private ArrayList<Question> getQuestionsOfFileContent(ArrayList<String> pFileContent, String pCategorie) {
         ArrayList<Question> questions = new ArrayList<>();
         String question = "";
         String answer = "";
@@ -133,14 +141,14 @@ public class FileAccess {
         int rightAnswered = 0;
         int questioned = 0;
 
-        for (int i = 0; i < pFileContent.size(); i++){
-            if (i % 4 == 0){ //Zeile 1
+        for (int i = 0; i < pFileContent.size(); i++) {
+            if (i % 4 == 0) { //Zeile 1
                 question = getQuestion(pFileContent.get(i));
                 rightAnswered = getRightAnswers(pFileContent.get(i));
                 questioned = getQuestioned(pFileContent.get(i));
-            } else if (i % 4 == 1){ //Zeile 2
+            } else if (i % 4 == 1) { //Zeile 2
                 answerWords = pFileContent.get(i).split(" ");
-            } else if (i % 4 == 2){ //Zeile 3
+            } else if (i % 4 == 2) { //Zeile 3
                 answer = pFileContent.get(i);
             } else { //leerzeile
                 questions.add(new Question(pCategorie, question, answerWords, answer, rightAnswered, questioned));
@@ -153,13 +161,13 @@ public class FileAccess {
 
     private String getQuestion(String pStr) {
         int qBeginning = -1;
-        for(int i = 0; i < pStr.length(); i++){
-            if (pStr.charAt(i) == '-'){
+        for (int i = 0; i < pStr.length(); i++) {
+            if (pStr.charAt(i) == '-') {
                 qBeginning = i + 1;
             }
         }
 
-        if (qBeginning == -1){
+        if (qBeginning == -1) {
             System.out.println("Error in: FileAccess.getQuestion");
             System.exit(0);
             return null;
@@ -168,22 +176,22 @@ public class FileAccess {
         }
     }
 
-    private int getRightAnswers(String pStr){
+    private int getRightAnswers(String pStr) {
         int qEnd = -1;
-        for(int i = 0; i < pStr.length(); i++){
-            if (pStr.charAt(i) == '/'){
+        for (int i = 0; i < pStr.length(); i++) {
+            if (pStr.charAt(i) == '/') {
                 qEnd = i;
             }
         }
 
-        if (qEnd == -1){
+        if (qEnd == -1) {
             System.out.println("Error in: FileAccess.getRightAnswer[1]");
             System.exit(0);
             return -1;
         } else {
             try {
                 return Integer.parseInt(pStr.substring(1, qEnd));
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Error in: FileAccess.getRightAnswer[2]");
                 System.exit(0);
                 return -1;
@@ -191,29 +199,29 @@ public class FileAccess {
         }
     }
 
-    private int getQuestioned(String pStr){
+    private int getQuestioned(String pStr) {
         int qBeginning = -1;
-        for(int i = 0; i < pStr.length(); i++){
-            if (pStr.charAt(i) == '/'){
+        for (int i = 0; i < pStr.length(); i++) {
+            if (pStr.charAt(i) == '/') {
                 qBeginning = i + 1;
             }
         }
 
         int qEnd = -1;
-        for(int i = 0; i < pStr.length(); i++){
-            if (pStr.charAt(i) == '-'){
+        for (int i = 0; i < pStr.length(); i++) {
+            if (pStr.charAt(i) == '-') {
                 qEnd = i;
             }
         }
 
-        if (qEnd == -1){
+        if (qEnd == -1) {
             System.out.println("Error in: FileAccess.getQuestioned[1]");
             System.exit(0);
             return -1;
         } else {
             try {
                 return Integer.parseInt(pStr.substring(qBeginning, qEnd));
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Error in: FileAccess.getQuestioned[2]");
                 System.exit(0);
                 return -1;
@@ -223,12 +231,13 @@ public class FileAccess {
 
     /**
      * Gibt die Datei zurück, welche zur Kategorie passt
+     *
      * @param pCategorie Kategorie
      * @return Datei der entsprechenden Kategorie
      */
-    private File getFileOfCategorie(String pCategorie){
-        for (int i = 0; i < getCategories().length; i++){
-            if (pCategorie.toLowerCase().equals(getCategories()[i].toLowerCase())){
+    private File getFileOfCategorie(String pCategorie) {
+        for (int i = 0; i < getCategories().length; i++) {
+            if (pCategorie.toLowerCase().equals(getCategories()[i].toLowerCase())) {
                 return getFilesOfFolder()[i];
             }
         }
@@ -238,11 +247,12 @@ public class FileAccess {
 
     /**
      * Gibt eine Liste der im Ordner befindlichen Dateien zurück
+     *
      * @return Array der Dateinamen
      */
     private File[] getFilesOfFolder() {
         File folder = new File(folderPath);
-        if (folder.isDirectory()){
+        if (folder.isDirectory()) {
             return folder.listFiles();
         } else {
             System.out.println("Error in: FileAccess.getFilesOfFolder");
@@ -251,49 +261,52 @@ public class FileAccess {
         }
     }
 
-    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset){
+    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset) {
         boolean succeeded = true;
 
-        for (int i = 0; i < pQuestions.size(); i ++){
-            try{
-                File file = getFileOfCategorie(pQuestions.get(i).getCategory());
-                ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
-                System.out.println("Inhalt FileContent zuvor");
-                for (int j = 0; j < fileContent.size(); i ++){
-                    System.out.println(fileContent.get(i));
-                }
+        for (int i = 0; i < pQuestions.size(); i++) {
+
+            File file = getFileOfCategorie(pQuestions.get(i).getCategory());
+            ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
+            System.out.println("Inhalt FileContent zuvor");
+            for (int j = 0; j < fileContent.size(); j++) {
+                System.out.println(fileContent.get(j));
+            }
 
 
-                //check if one of the lines of the file contains the question... if so, replace it with the updated line
-                for (int l = 0; l < fileContent.size(); l++){
-                    if (fileContent.get(i).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())){
-                        System.out.println("Vergleich erfolgreich für: ");
-                        System.out.println(fileContent.get(i) + " == " + pQuestions.get(i).getQuestion());
-                        if (pReset == true){
-                            fileContent.set(i, "#0/0-" + pQuestions.get(i).getQuestion());
-                        } else {
-                            fileContent.set(i, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
-                            System.out.println("ersetze durch: " + "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
-                        }
+            //check if one of the lines of the file contains the question... if so, replace it with the updated line
+            for (int l = 0; l < fileContent.size(); l++) {
+                if (fileContent.get(i).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())) {
+                    System.out.println("Vergleich erfolgreich für: ");
+                    System.out.println(fileContent.get(i) + " == " + pQuestions.get(i).getQuestion());
+                    if (pReset == true) {
+                        fileContent.set(i, "#0/0-" + pQuestions.get(i).getQuestion());
+                    } else {
+                        fileContent.set(i, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
+                        System.out.println("ersetze durch: " + "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
                     }
                 }
-
+            }
+            try {
                 file.delete();
-                file = new File(folderPath + System.getProperty("file.separator") +  pQuestions.get(i).getCategory() + ".txt");
+                file = new File(folderPath + System.getProperty("file.separator") + pQuestions.get(i).getCategory() + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
 
                 System.out.println("Inhalt FileContent danach");
-                for (int l = 0; l < fileContent.size(); l++){
-                    System.out.println(fileContent.get(i));
-                    fw.write(fileContent.get(i) + System.lineSeparator());
+                for (int l = 0; l < fileContent.size(); l++) {
+                    System.out.println(fileContent.get(l));
+                    fw.write(fileContent.get(l) + System.lineSeparator());
                 }
                 fw.close();
 
-            } catch (Exception e){
+            } catch (Exception e) {
+                System.out.println(e.toString());
                 System.out.println("Error in: FileAccess.changeStatsOfQuestionInCategorie");
+
                 succeeded = false;
+
             }
         }
 

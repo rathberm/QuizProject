@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Quiz {
 
     private ArrayList<Question> questions = new ArrayList<>();
-    private String categories[];
 
     private int right;
     private int wrong;
@@ -23,7 +22,6 @@ public class Quiz {
         wrong = 0;
         answer = "";
         fileAccess = new FileAccess();
-        String categories[] = fileAccess.getCategories();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
         firstCheck();
@@ -40,7 +38,6 @@ public class Quiz {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        boolean reset = false;
         int count = 1;
 
         if (category.equals("zufaellig")) {
@@ -48,6 +45,7 @@ public class Quiz {
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
         }
+
         //Sortiert die Fragen in der Liste zufällig neu
         Collections.shuffle(questions);
 
@@ -59,6 +57,23 @@ public class Quiz {
             validateInput(answer);
             manageAnswer(q);
             count++;
+        }
+        fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
+    }
+
+    /**
+     * @param q Die Frage die verwaltet werden soll
+     */
+    private void manageAnswer(Question q) {
+        q.increaseQuestioned();
+        if (q.validateAnswer(answer)) {
+            System.out.println("Das war richtig.");
+            q.increaseRightAnswered();
+            incRight();
+        } else {
+            System.out.println("Das war leider falsch.");
+            System.out.println(q.getAnswer());
+            incWrong();
         }
     }
 
@@ -81,6 +96,9 @@ public class Quiz {
         }
     }
 
+    /**
+     * Verwaltet die User Eingabe von neuen Fragen
+     */
     private void createOwnQuestion() {
         String pCategory;
         String question;
@@ -111,7 +129,6 @@ public class Quiz {
             System.out.println("Ok, dann wird das Programm beendet.");
             System.exit(0);
         }
-
     }
 
     /**
@@ -130,20 +147,6 @@ public class Quiz {
         Collections.shuffle(allQuestions);
 
         return allQuestions;
-    }
-
-    /**
-     * @param q Die Frage die verwaltet werden soll
-     */
-    private void manageAnswer(Question q) {
-        if (q.validateAnswer(answer)) {
-            System.out.println("Das war richtig.");
-            incRight();
-        } else {
-            System.out.println("Das war leider falsch.");
-            System.out.println(q.getAnswer());
-            incWrong();
-        }
     }
 
     private void validateInput(String pInput) {
