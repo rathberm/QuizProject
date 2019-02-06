@@ -251,11 +251,36 @@ public class FileAccess {
         }
     }
 
-    public boolean changeStatsOfQuestionInCategorie(ArrayList<Question> questions){
+    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> questions){
         boolean succeeded = true;
 
-        for (int i = 0; i < questions; i ++){
-            questions.get(i)
+        for (int i = 0; i < questions.size(); i ++){
+            try{
+                File file = getFileOfCategorie(questions.get(i).getCategory());
+                ArrayList<String> fileContent = getFileContent(questions.get(i).getCategory());
+
+                //check if one of the lines of the file contains the question... if so, replace it with the updated line
+                for (int l = 0; l < fileContent.size(); l++){
+                    if (fileContent.get(i).toLowerCase().contains(questions.get(i).getQuestion().toLowerCase())){
+                        fileContent.set(i, "#" + questions.get(i).getRightAnswered() + "/" + questions.get(i).getQuestioned() + "-" + questions.get(i).getQuestion());
+                    }
+                }
+
+                file.delete();
+                file = new File(folderPath + System.getProperty("file.separator") +  questions.get(i).getCategory() + ".txt");
+                file.createNewFile();
+
+                FileWriter fw = new FileWriter(file, true);
+
+                for (int l = 0; l < questions.size(); l++){
+                    fw.write(fileContent.get(i));
+                }
+                fw.close();
+
+            } catch (Exception e){
+                System.out.println("Error in: changeStatsOfQuestionInCategorie");
+                succeeded = false;
+            }
         }
 
         return succeeded;

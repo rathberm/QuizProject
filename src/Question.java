@@ -11,6 +11,8 @@ public class Question {
         this.answerWord = pAnswerWord;
         this.answer = pAnswer;
         this.category = pCategory;
+        this.rightAnswered = pRightAnswered;
+        this.questioned = pQuestioned;
     }
 
     /**
@@ -39,6 +41,10 @@ public class Question {
 
     public String getAnswer() {
         return answer;
+    }
+
+    public String getCategory(){
+        return category;
     }
 
     public void increaseQuestioned(){
