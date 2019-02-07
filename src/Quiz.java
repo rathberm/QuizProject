@@ -57,7 +57,6 @@ public class Quiz {
 
             System.out.println("Frage " + count + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
-            validateInput(answer);
             manageAnswer(q);
             count++;
         }
@@ -179,16 +178,6 @@ public class Quiz {
         Collections.shuffle(allQuestions);
 
         return allQuestions;
-    }
-
-    private void validateInput(String pInput) {
-        if (pInput.matches("[A-z\\s0-9.]+")) {
-            return;
-        } else {
-            System.out.println("Dies ist keine gültige Antwort!! Antworten bestehen aus Buchstaben oder Zahlen.");
-            System.out.println("Das Quiz wird beendet, streng dich nächstes mal mehr an.");
-            System.exit(0);
-        }
     }
 
     /**
