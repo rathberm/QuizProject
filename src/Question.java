@@ -36,9 +36,9 @@ class Question {
     public boolean validateAnswer(String pInput) {
         String[] arr = pInput.split(" ");
         boolean rightAnswer = false;
-        for (int j = 0; j < answerWord.length; j++) {
+        for (String s : answerWord) {
             for (int i = 0; i < arr.length; i++) {
-                if (arr[i].toLowerCase().contains(this.answerWord[j].toLowerCase())) {
+                if (arr[i].toLowerCase().contains(s.toLowerCase())) {
                     rightAnswer = true;
                 }
             }

@@ -23,14 +23,14 @@ public class FileAccess {
         if (folderPath.isEmpty() || folderPath.equals("") || folderPath == null) {
             error = true;
         }
-        if (new File(folderPath).exists() == false) {
+        if (!new File(folderPath).exists()) {
             error = true;
         }
         if (getFilesOfFolder().length == 0) {
             error = true;
         }
 
-        if (error == true) {
+        if (error) {
             System.out.println("Error in: FileAccess.firstCheck => Failed");
             System.exit(0);
         }
@@ -267,45 +267,40 @@ public class FileAccess {
      * Aktualisiert die Fragelisten (dateien) (die beiden parameter der fragen "rightAnswered" und "questioned"
      * @param pQuestions Arraylist von fragen welche aktualisiert werden sollen
      * @param pReset Gibt an, ob "rightAnswered" und "questioned", für alle fragen der Arraylist, auf 0 zurück gesetzt werden sollen
-     * @return Gibt an ob die Operation erfolgreich verlaufen ist
      */
-    public boolean changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset) {
-        boolean succeeded = true;
-
-        for (int i = 0; i < pQuestions.size(); i++) {
+    public void changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset) {
+        for (Question pQuestion : pQuestions) {
             try {
-                File file = getFileOfCategorie(pQuestions.get(i).getCategory());
-                ArrayList<String> fileContent = getFileContent(pQuestions.get(i).getCategory());
+                File file = getFileOfCategorie(pQuestion.getCategory());
+                ArrayList<String> fileContent = getFileContent(pQuestion.getCategory());
 
                 //check if one of the lines of the file contains the question... if so, replace it with the updated line
                 for (int l = 0; l < fileContent.size(); l++) {
-                    if (fileContent.get(l).toLowerCase().contains(pQuestions.get(i).getQuestion().toLowerCase())) {
-                        if (pReset == true) {
-                            fileContent.set(l, "#0/0-" + pQuestions.get(i).getQuestion());
+                    if (fileContent.get(l).toLowerCase().contains(pQuestion.getQuestion().toLowerCase())) {
+                        if (pReset) {
+                            fileContent.set(l, "#0/0-" + pQuestion.getQuestion());
                         } else {
-                            fileContent.set(l, "#" + pQuestions.get(i).getRightAnswered() + "/" + pQuestions.get(i).getQuestioned() + "-" + pQuestions.get(i).getQuestion());
+                            fileContent.set(l, "#" + pQuestion.getRightAnswered() + "/" + pQuestion.getQuestioned() + "-" + pQuestion.getQuestion());
                         }
                     }
                 }
 
                 file.delete();
-                file = new File(folderPath + System.getProperty("file.separator") + pQuestions.get(i).getCategory() + ".txt");
+                file = new File(folderPath + System.getProperty("file.separator") + pQuestion.getCategory() + ".txt");
                 file.createNewFile();
 
                 FileWriter fw = new FileWriter(file, true);
-                for (int l = 0; l < fileContent.size(); l++) {
-                    fw.write(fileContent.get(l) + System.lineSeparator());
+                for (String s : fileContent) {
+                    fw.write(s + System.lineSeparator());
                 }
                 fw.close();
 
             } catch (Exception e) {
                 System.out.println(e.toString());
                 System.out.println("Error in: FileAccess.changeStatsOfQuestionInCategorie");
-                succeeded = false;
+                System.exit(0);
             }
         }
-
-        return succeeded;
     }
 
     /**
@@ -396,7 +391,7 @@ public class FileAccess {
         ArrayList<String> fileContent = new ArrayList<>();
         Highscore highscore = new Highscore();
 
-        if (file.exists() == false){
+        if (file.exists()){
             return highscore;
         }
 

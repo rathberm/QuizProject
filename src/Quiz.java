@@ -351,7 +351,7 @@ class Quiz {
 
     /**
      * Macht einen Sortierdurchlauf mit Bubblesort, um das Questions-Array zu sortieren
-     * @return
+     * @return true: Questions-Array ist sortiert; false: Questions-Array nicht sortiert
      */
     private boolean sort() {
         Question temp;

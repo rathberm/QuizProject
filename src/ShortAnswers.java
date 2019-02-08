@@ -48,10 +48,9 @@ class ShortAnswers {
             //Erzeugt einen Reader der den InputStream der Seite liest
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
-            String line;
             //Wenn die gelesene Zeile keine leere Zeile ist, wird sie in der Kosole ausgegeben
-            while ((line = reader.readLine()) != null) {
-                return line;
+            if (reader.readLine() != null){
+                return reader.readLine();
             }
             reader.close();
             return "-1";
