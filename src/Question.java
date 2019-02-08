@@ -38,7 +38,7 @@ class Question {
         boolean rightAnswer = false;
         for (int j = 0; j < answerWord.length; j++) {
             for (int i = 0; i < arr.length; i++) {
-                if (arr[i].contains(this.answerWord[j])) {
+                if (arr[i].toLowerCase().contains(this.answerWord[j].toLowerCase())) {
                     rightAnswer = true;
                 }
             }
