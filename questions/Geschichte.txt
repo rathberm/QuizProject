@@ -2,27 +2,27 @@
 1939
 Der zweite Weltkrieg begann 1939.
 
-#1/1-Wann endete der zweite Weltkrieg?
+#3/3-Wann endete der zweite Weltkrieg?
 1945
 Der zweite Weltkrieg endete 1945.
 
-#0/0-Welcher Praesident der USA wurde in seinem Auto erschossen?
+#1/1-Welcher Praesident der USA wurde in seinem Auto erschossen?
 John Kennedy
 John F. Kennedy wurde 1939 in seinem Auto erschossen.
 
-#1/1-Wann erklaerten die United States of America Ihre unabhaengigkeit?
+#3/3-Wann erklaerten die United States of America Ihre unabhaengigkeit?
 1776
 Die United States of America erklaerten 1776 Ihre unabhaengigkeit.
 
-#1/1-Wann wurde das Internet erfunden?
+#2/2-Wann wurde das Internet erfunden?
 1990
 Das Internet wurde 1990 erfunden.
 
-#2/2-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
+#3/3-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
 1945
 Die Atombomben wurden 1945 auf Hirsohima und Nagasaki geworfen.
 
-#1/1-Wann begann der erste Weltkrieg?
+#2/2-Wann begann der erste Weltkrieg?
 1914
 Der erste Weltkrieg begann am 28.07.1914
 
