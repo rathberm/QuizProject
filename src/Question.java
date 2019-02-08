@@ -24,7 +24,7 @@ public class Question {
         }else{
             this.percentage = 0;
         }
-    }
+}
 
     /**
      * Vergleicht die Antwort mit der Lösung
