@@ -33,9 +33,6 @@ class Quiz {
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
         mainMenu();
-        printCategories();
-        category = askCategory();
-        amountQuestions = askAmount();
         output();
 
         System.out.println("Du hast das Quiz beendet.");
@@ -49,6 +46,9 @@ class Quiz {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
+        printCategories();
+        category = askCategory();
+        amountQuestions = askAmount();
         int rightAnswered = 0;
 
         if (category.toLowerCase().equals("zufaellig")) {
@@ -136,12 +136,28 @@ class Quiz {
         if (cat.toLowerCase().equals("exit")) {
             mainMenu();
         }
-        if (isCategory(cat)) {
-            return cat.toLowerCase();
+        if (isCategory(cat.toLowerCase())) {
+            return cat;
         } else {
             System.out.println("Das ist keine gültige Kategorie, versuchs nochmal.");
             return askCategory();
         }
+    }
+    /**
+     * Überprüft ob der übergebene String eine Kategorie ist oder nicht
+     *
+     * @param pCategory Die Kategorie
+     * @return True wenn ja, false wenn nicht.
+     */
+    private boolean isCategory(String pCategory) {
+        boolean r = false;
+        String[] categories = fileAccess.getCategories();
+        for (int i = 0; i < categories.length; i++) {
+            if (pCategory.equals(categories[i].toLowerCase()) || pCategory.equals("zufaellig")) {
+                r = true;
+            }
+        }
+        return r;
     }
 
     /**
@@ -199,23 +215,6 @@ class Quiz {
     }
 
     /**
-     * Überprüft ob der übergebene String eine Kategorie ist oder nicht
-     *
-     * @param pCategory Die Kategorie
-     * @return True wenn ja, false wenn nicht.
-     */
-    private boolean isCategory(String pCategory) {
-        boolean r = false;
-        String[] categories = fileAccess.getCategories();
-        for (int i = 0; i < categories.length; i++) {
-            if (pCategory.equals(categories[i].toLowerCase()) || pCategory.equals("zufaellig")) {
-                r = true;
-            }
-        }
-        return r;
-    }
-
-    /**
      * Gibt alle Kategorien in der Konsole aus
      */
     private void printCategories() {
@@ -239,6 +238,7 @@ class Quiz {
             if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
                 System.out.println("Du kommst durch die Eingabe von \"exit\" wieder zurueck zur Auswahl.");
+                output();
             } else if (answer.contains("nichts")) {
                 System.out.println("Ok, das Programm wird beendet.");
                 System.exit(0);
