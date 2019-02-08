@@ -1,72 +1,64 @@
-import com.wolfram.alpha.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 
+/**
+ * Diese Klasse kümmert sich um das Fragen stellen an Wolfram alpha
+ *
+ * @author Moritz Rathberger
+ */
 public class ShortAnswers {
+    private final String APPID = "6GHRKV-R85EJLHKVY";
 
+    /**
+     * Baut aus dem Input String eine WolframAlpha Url
+     *
+     * @param pInput Der Input String(Die Frage)
+     * @return Die fertige URl
+     */
+    private String buildUrl(String pInput) {
 
-    private static String appid;
+        //Standarteil der url
+        String url = "http://api.wolframalpha.com/v1/result?appid=";
+        url = url + APPID;
+        url = url + "&i=";
+        //splitted den input String
+        String[] arr = pInput.split(" ");
+        //fügt den gesplitteten Input String wieder zusammen
+        //und setzt hinter jedes Wort ein +
+        url = url + String.join("+", arr);
+        url = url + "%3f";
+        //Replaced alle leerzeichen die eventuell noch vorhanden sind
+        url.replaceAll("\\s+", "");
 
-    public ShortAnswers() {
-        appid = "6GHRKV-R85EJLHKVY";
+        return url;
     }
 
-    public void query(String pInput) {
+    /**
+     * Ruft Wolfram auf, liest die Seite aus und gibt den Inhalt in der Konsole aus
+     *
+     * @param pInput Die Frage
+     */
+    public void queryWolfram(String pInput) {
 
-
-        // The WAEngine is a factory for creating WAQuery objects,
-        // and it also used to perform those queries. You can set properties of
-        // the WAEngine (such as the desired API output format types) that will
-        // be inherited by all WAQuery objects created from it. Most applications
-        // will only need to crete one WAEngine object, which is used throughout
-        // the life of the application.
-        WAEngine engine = new WAEngine();
-
-        // These properties will be set in all the WAQuery objects created from this WAEngine.
-        engine.setAppID(appid);
-        engine.addFormat("plaintext");
-
-        // Create the query.
-        WAQuery query = engine.createQuery();
-
-        query.setInput(pInput);
+        String urlString = buildUrl(pInput);
 
         try {
+            URL url = new URL(urlString);
+            //Erzeugt einen Reader der den InputStream der Seite liest
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
-            // This sends the URL to the Wolfram|Alpha server, gets the XML result
-            // and parses it into an object hierarchy held by the WAQueryResult object.
-            WAQueryResult queryResult = engine.performQuery(query);
-            System.out.println(queryResult.toString());
-
-            if (queryResult.isError()) {
-                System.out.println("Query error");
-                System.out.println("  error code: " + queryResult.getErrorCode());
-                System.out.println("  error message: " + queryResult.getErrorMessage());
-            } else if (!queryResult.isSuccess()) {
-                System.out.println("Die Eingabe wurde nicht verstanden oder dazu gibt es keine Antwort.");
-            } else {
-                System.out.println("Successful query. Pods follow:\n");
-                for (WAPod pod : queryResult.getPods()) {
-                    if (!pod.isError()) {
-                        System.out.println(pod.getTitle());
-                        System.out.println("------------");
-                        for (WASubpod subpod : pod.getSubpods()) {
-                            for (Object element : subpod.getContents()) {
-                                if (element instanceof WAPlainText) {
-                                    System.out.println(((WAPlainText) element).getText());
-                                    System.out.println("");
-                                }
-                            }
-                        }
-                        System.out.println("");
-                    }
-                }
-
+            String line;
+            //Wenn die gelesene Zeile keine leere Zeile ist, wird sie in der Kosole ausgegeben
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
             }
-        } catch (WAException e) {
-            e.printStackTrace();
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("Error in ShortAnswers.queryWolfram");
         }
 
     }
-
 }
 
 

@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+/**
+ * Quiz kümmert sich um alle Ausgaben in der Konsole
+ *
+ * @author Moritz Rathberger
+ */
 public class Quiz {
 
     private ArrayList<Question> questions = new ArrayList<>();
@@ -60,7 +65,7 @@ public class Quiz {
             manageAnswer(q);
             count++;
         }
-        //Updated die Einträge in der .txt
+        //Updated die Einträge in der entsprechenden .txt
         fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
     }
 
@@ -241,14 +246,14 @@ public class Quiz {
     private void askWolfram() {
         System.out.println();
         System.out.println("---------------------------------------------------------------------------------");
-        System.out.println("Jetzt kannst du Fragen stellen die von Wolfram Alpha SEHR ausfürlich beantwortet werden.");
+        System.out.println("Jetzt kannst du Fragen stellen die von Wolfram Alpha beantwortet werden.");
         System.out.println("Aber Achtung: Du musst die fragen auf Englisch stellen!");
         System.out.println("Alternativ kommst du durch die eingabe von \"exit\" wieder zurueck zur Auswahl.");
         String ans = queryUser("Was möchtest du wissen?");
         if (ans.equals("exit")) {
             firstCheck();
         } else {
-            shortAnswers.query(ans);
+             shortAnswers.queryWolfram(ans);
             askWolfram();
         }
     }

@@ -1,3 +1,8 @@
+/**
+ * In dieser Klasse sind die Fragen mit ihren Attributen definiert
+ * @author Jan Roth, Moritz Rathberger
+ */
+
 public class Question {
     private String question;
     private String[] answerWord;
