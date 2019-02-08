@@ -345,7 +345,7 @@ class Quiz {
         boolean sorted = true;
 
         for (int i = 0; i < questions.size() - 1; i++) {
-            if (questions.get(i).getPercentage() < questions.get(i + 1).getPercentage()) {
+            if (questions.get(i).getPercentage() > questions.get(i + 1).getPercentage()) {
                 temp = questions.get(i + 1);
                 questions.set(i + 1, questions.get(i));
                 questions.set(i, temp);
