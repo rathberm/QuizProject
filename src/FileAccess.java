@@ -355,7 +355,7 @@ public class FileAccess {
     public void clearHistory(){
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
-            file.delete()
+            file.delete();
             file.createNewFile();
 
             FileWriter fw = new FileWriter(file, true);

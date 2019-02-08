@@ -50,8 +50,12 @@ public class Quiz {
 
         if (category.toLowerCase().equals("zufaellig")) {
             questions = mixQuestions();
+            while (!sort()) {
+            }
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
+            while (!sort()) {
+            }
         }
 
         //Sortiert die Fragen in der Liste zufällig neu
@@ -239,7 +243,7 @@ public class Quiz {
                 createOwnQuestion();
             } else if (answer.contains("stellen")) {
                 askWolfram();
-            } else if (answer.contains("historie")){
+            } else if (answer.contains("historie")) {
                 showHisto();
             } else if (answer.equals("exit")) {
                 System.exit(0);
@@ -273,25 +277,33 @@ public class Quiz {
         }
     }
 
-    private void showHisto(){
+    private void showHisto() {
         ArrayList<String> histo = fileAccess.getHistory();
         System.out.println();
         System.out.println("---------------------------------------------------------------------------------");
-        for (int i = 0; i < histo.size(); i++){
+        for (int i = 0; i < histo.size(); i++) {
             System.out.println(histo.get(i));
         }
         System.out.println();
+        String ans = queryUser("\"l\" zum löschen, \"f\" um fortzufahren.");
+
+        if(!ans.matches("[lf]")){
+            System.out.println("Keine gültige Eingabe, versuchs nochmal.");
+            showHisto();
+        }else if(ans.equals("l")){
+            fileAccess.clearHistory();
+        }
         firstCheck();
     }
 
-    private boolean sort(){
+    private boolean sort() {
         Question temp;
         boolean sorted = true;
 
-        for (int i = 0; i < questions.size() - 1; i++){
-            if (questions.get(i).getPercentage() > questions.get(i+1).getPercentage()){
-                temp = questions.get(i+1);
-                questions.set(i+1, questions.get(i));
+        for (int i = 0; i < questions.size() - 1; i++) {
+            if (questions.get(i).getPercentage() > questions.get(i + 1).getPercentage()) {
+                temp = questions.get(i + 1);
+                questions.set(i + 1, questions.get(i));
                 questions.set(i, temp);
                 sorted = false;
             }
