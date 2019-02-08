@@ -165,7 +165,7 @@ public class Quiz {
         answerWord = queryUser("Jetzt musst du die Antwort für deine Frage eingeben: ");
         answerSentence = queryUser("Bitte gib jetzt den Antwortsatz ein: ");
 
-        String str = queryUser("Willst du die Frage " + question + " der Kategorie " + pCategory + " mit der Antwort " + answerWord + " und dem Antwortsatz " + answerSentence + " wirklich speichern?(ja/nein)").toLowerCase();
+        String str = queryUser("Willst du die Frage \"" + question + "\" der Kategorie " + pCategory + " mit der Antwort \"" + answerWord + "\" und dem Antwortsatz \"" + answerSentence + "\" wirklich speichern?(ja/nein)").toLowerCase();
 
         if (str.equals("ja") && str.matches("[A-z]+")) {
             fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
@@ -231,7 +231,7 @@ public class Quiz {
     private void firstCheck() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Hauptmenue:");
-        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von alldem??(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von allem?(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
@@ -270,9 +270,9 @@ public class Quiz {
             String answer = shortAnswers.queryWolfram(userInput);
             if (!answer.equals("-1")) {
                 System.out.println(answer);
+                answer = answer.replaceAll("[,-/#]", "");
+                fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
             }
-            answer = answer.replaceAll("[,-/#]", "");
-            fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
             askWolfram();
         }
     }
@@ -292,6 +292,7 @@ public class Quiz {
             showHisto();
         }else if(ans.equals("l")){
             fileAccess.clearHistory();
+            System.out.println("Historie wurde geloescht.");
         }
         firstCheck();
     }
