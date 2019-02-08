@@ -351,4 +351,19 @@ public class FileAccess {
             System.exit(0);
         }
     }
+
+    public void clearHistory(){
+        try {
+            File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
+            file.delete()
+            file.createNewFile();
+
+            FileWriter fw = new FileWriter(file, true);
+            fw.write("Lernhistorie:");
+            fw.close();
+        } catch (Exception e) {
+            System.out.println("Error in: FileAccess.clearHistory");
+            System.exit(0);
+        }
+    }
 }
