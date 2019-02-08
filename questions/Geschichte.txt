@@ -14,26 +14,26 @@ John F. Kennedy wurde 1939 in seinem Auto erschossen.
 1776
 Die United States of America erklaerten 1776 Ihre unabhaengigkeit.
 
-#3/4-Wann wurde das Internet erfunden?
+#4/5-Wann wurde das Internet erfunden?
 1990
 Das Internet wurde 1990 erfunden.
 
-#1/1-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
+#2/2-Wann wurden die Atombomben auf Hiroshima und Nagasaki geworfen?
 1945
 Die Atombomben wurden 1945 auf Hirsohima und Nagasaki geworfen.
 
-#0/4-Wann begann der erste Weltkrieg?
+#1/5-Wann begann der erste Weltkrieg?
 1914
 Der erste Weltkrieg begann am 28.07.1914
 
-#3/4-Wann endete der erste Weltkrieg?
+#3/5-Wann endete der erste Weltkrieg?
 1918
 Der erste Weltkrieg endete am 11.11.1918
 
-#0/5-Wann entdeckte Christopher Columbus die "Neue Welt"?
+#0/6-Wann entdeckte Christopher Columbus die "Neue Welt"?
 1492
 Christopher Columbus entdeckte 1492 Amerika.
 
-#1/3-Welches Reich, welches sich aus dem heutigen Italien ausbreitete, war von 753 v. Chris. bis 476 n. Chr. das Groesste?
+#1/4-Welches Reich, welches sich aus dem heutigen Italien ausbreitete, war von 753 v. Chris. bis 476 n. Chr. das Groesste?
 Roemische Rom Roemer
 Das Roemische Reich.

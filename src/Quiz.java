@@ -35,10 +35,7 @@ class Quiz {
         mainMenu();
         output();
 
-        System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
-        initHighscore();
-        mainMenu();
+
         right = 0;
     }
 
@@ -68,14 +65,17 @@ class Quiz {
             Question q = questions.get(i);
 
             System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
-            answer = queryUser(q.getQuestion());
+            answer = queryUser(q.getQuestion().toLowerCase());
             rightAnswered += manageAnswer(q);
 
         }
+        System.out.println("Du hast das Quiz beendet.");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
         //Updated die Einträge in der entsprechenden .txt
         fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
-
         fileAccess.addHistoryEntry(rightAnswered, amountQuestions);
+        initHighscore();
+        mainMenu();
     }
 
     /**
@@ -143,6 +143,7 @@ class Quiz {
             return askCategory();
         }
     }
+
     /**
      * Überprüft ob der übergebene String eine Kategorie ist oder nicht
      *
@@ -203,9 +204,9 @@ class Quiz {
      */
     private ArrayList<Question> mixQuestions() {
         String[] categories = fileAccess.getCategories();
-        ArrayList<Question> allQuestions = fileAccess.getQuestionsOfCategorie("Geschichte");
+        ArrayList<Question> allQuestions = fileAccess.getQuestionsOfCategorie(categories[0]);
 
-        for (int i = 0; i < categories.length; i++) {
+        for (int i = 1; i < categories.length; i++) {
             ArrayList<Question> notAllQuestions = fileAccess.getQuestionsOfCategorie(categories[i]);
             allQuestions.addAll(notAllQuestions);
         }
@@ -262,6 +263,32 @@ class Quiz {
         }
     }
 
+    /**
+     * Gibt die Historie in der Konsole aus.
+     */
+    private void showHisto() {
+        ArrayList<String> histo = fileAccess.getHistory();
+        System.out.println();
+        System.out.println("---------------------------------------------------------------------------------");
+        for (int i = 0; i < histo.size(); i++) {
+            System.out.println(histo.get(i));
+        }
+        System.out.println();
+        String ans = queryUser("\"l\" zum löschen, \"f\" um fortzufahren.");
+
+        if (!ans.matches("[lf]")) {
+            System.out.println("Keine gültige Eingabe, versuchs nochmal.");
+            showHisto();
+        } else if (ans.equals("l")) {
+            fileAccess.clearHistory();
+            System.out.println("Historie wurde geloescht.");
+        }
+        mainMenu();
+    }
+
+    /**
+     * Gibt den aktuellen Highscore in der Konsole aus
+     */
     private void showHighscore() {
         Highscore hsc = fileAccess.getHighscore();
         System.out.println("Aktueller Highscore: ");
@@ -277,10 +304,13 @@ class Quiz {
         }
     }
 
+    /**
+     * Ueberprueft ob der aktuelle Punktestand besser als der momentane Highscore ist.
+     */
     private void initHighscore() {
         Highscore hsc = fileAccess.getHighscore();
         int currPercent = hsc.getPercent();
-        int newPercent = (getRight() / amountQuestions) * 100;
+        double newPercent = (getRight() / amountQuestions) * 100;
         System.out.println("right: " + getRight());
         System.out.println("anzahl" + amountQuestions);
 
@@ -312,25 +342,6 @@ class Quiz {
         }
     }
 
-    private void showHisto() {
-        ArrayList<String> histo = fileAccess.getHistory();
-        System.out.println();
-        System.out.println("---------------------------------------------------------------------------------");
-        for (int i = 0; i < histo.size(); i++) {
-            System.out.println(histo.get(i));
-        }
-        System.out.println();
-        String ans = queryUser("\"l\" zum löschen, \"f\" um fortzufahren.");
-
-        if (!ans.matches("[lf]")) {
-            System.out.println("Keine gültige Eingabe, versuchs nochmal.");
-            showHisto();
-        } else if (ans.equals("l")) {
-            fileAccess.clearHistory();
-            System.out.println("Historie wurde geloescht.");
-        }
-        mainMenu();
-    }
 
     private boolean sort() {
         Question temp;
