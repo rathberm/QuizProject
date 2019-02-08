@@ -376,7 +376,7 @@ public class FileAccess {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            FileWriter fw = new FileWriter(file, true);
+            FileWriter fw = new FileWriter(file, false);
             fw.write(pName + System.lineSeparator() + pPercent);
             fw.close();
         } catch (Exception e) {

@@ -132,12 +132,12 @@ class Quiz {
      */
     private String askCategory() {
         String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
-
-        if (cat.equals("exit")) {
+        System.out.println(cat);
+        if (cat.toLowerCase().equals("exit")) {
             mainMenu();
         }
         if (isCategory(cat)) {
-            return cat;
+            return cat.toLowerCase();
         } else {
             System.out.println("Das ist keine gültige Kategorie, versuchs nochmal.");
             return askCategory();
@@ -208,7 +208,7 @@ class Quiz {
         boolean r = false;
         String[] categories = fileAccess.getCategories();
         for (int i = 0; i < categories.length; i++) {
-            if (pCategory.equals(categories[i]) || pCategory.equals("zufaellig")) {
+            if (pCategory.equals(categories[i].toLowerCase()) || pCategory.equals("zufaellig")) {
                 r = true;
             }
         }
@@ -281,14 +281,15 @@ class Quiz {
         Highscore hsc = fileAccess.getHighscore();
         int currPercent = hsc.getPercent();
         int newPercent = (getRight() / amountQuestions) * 100;
+        System.out.println("right: " + getRight());
+        System.out.println("anzahl" + amountQuestions);
 
         if (currPercent <= newPercent) {
             System.out.println("Gratulation!! Das war ein neuer Highscore!");
             String name = queryUser("Wie heißt du?");
-            hsc.setPercent(newPercent);
-            hsc.setName(name);
+            System.out.println(newPercent);
+            fileAccess.setHighscore(name, newPercent);
         }
-
     }
 
     private void askWolfram() {
