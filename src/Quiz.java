@@ -32,7 +32,7 @@ class Quiz {
         shortAnswers = new ShortAnswers();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
-        mainMenue();
+        mainMenu();
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
@@ -40,7 +40,8 @@ class Quiz {
 
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
-        mainMenue();
+        initHighscore();
+        mainMenu();
         right = 0;
     }
 
@@ -82,7 +83,7 @@ class Quiz {
      */
     private int manageAnswer(Question q) {
         if (answer.equals("exit")) {
-            mainMenue();
+            mainMenu();
         } else {
             q.increaseQuestioned();
             if (q.validateAnswer(answer)) {
@@ -106,7 +107,7 @@ class Quiz {
         System.out.println("Erkannte Kategorie: " + category);
         length = queryUser("Wie viele Fragen möchtest du beantworten?");
         if (length.equals("exit")) {
-            mainMenue();
+            mainMenu();
         }
 
         if (!length.matches("[-0-9]+")) {
@@ -133,7 +134,7 @@ class Quiz {
         String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
 
         if (cat.equals("exit")) {
-            mainMenue();
+            mainMenu();
         }
         if (isCategory(cat)) {
             return cat;
@@ -172,10 +173,10 @@ class Quiz {
         if (str.equals("ja") && str.matches("[A-z]+")) {
             fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
             System.out.println("Frage erfolgreich gespeichert.");
-            mainMenue();
+            mainMenu();
         } else {
             System.out.println("Ok, Frage erstellen wird abgebrochen.");
-            mainMenue();
+            mainMenu();
         }
     }
 
@@ -230,10 +231,10 @@ class Quiz {
     /**
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
-    private void mainMenue() {
+    private void mainMenu() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Hauptmenue:");
-        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von allem?(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen,\n Historie einsehen, Highscore einsehen oder nichts von allem?(beantworten/erstellen/stellen/historie/highscore/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
@@ -247,16 +248,47 @@ class Quiz {
                 askWolfram();
             } else if (answer.contains("historie")) {
                 showHisto();
+            } else if (answer.contains("highscore")) {
+                showHighscore();
             } else if (answer.equals("exit")) {
                 System.exit(0);
             } else {
                 System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
-                mainMenue();
+                mainMenu();
             }
         } else {
             System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
-            mainMenue();
+            mainMenu();
         }
+    }
+
+    private void showHighscore() {
+        Highscore hsc = fileAccess.getHighscore();
+        System.out.println("Aktueller Highscore: ");
+        System.out.println(hsc.getName() + ": " + hsc.getPercent());
+        String ans = queryUser("\"f\" um fortzufahren.");
+
+        if (!ans.matches("[f]")) {
+            System.out.println("Keine gültige Eingabe, versuchs nochmal.");
+            showHighscore();
+        } else if (ans.equals("f")) {
+            mainMenu();
+
+        }
+    }
+
+    private void initHighscore() {
+        Highscore hsc = fileAccess.getHighscore();
+        int currPercent = hsc.getPercent();
+        int newPercent = (getRight() / amountQuestions) * 100;
+
+        if (currPercent <= newPercent) {
+            System.out.println("Gratulation!! Das war ein neuer Highscore!");
+            String name = queryUser("Wie heißt du?");
+            hsc.setPercent(newPercent);
+            hsc.setName(name);
+        }
+
     }
 
     private void askWolfram() {
@@ -267,7 +299,7 @@ class Quiz {
         System.out.println("Alternativ kommst du durch die eingabe von \"exit\" wieder zurueck zur Auswahl.");
         String userInput = queryUser("Was möchtest du wissen?");
         if (userInput.equals("exit")) {
-            mainMenue();
+            mainMenu();
         } else {
             String answer = shortAnswers.queryWolfram(userInput);
             if (!answer.equals("-1")) {
@@ -296,7 +328,7 @@ class Quiz {
             fileAccess.clearHistory();
             System.out.println("Historie wurde geloescht.");
         }
-        mainMenue();
+        mainMenu();
     }
 
     private boolean sort() {

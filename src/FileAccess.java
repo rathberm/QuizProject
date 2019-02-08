@@ -103,7 +103,6 @@ public class FileAccess {
         } catch (Exception e) {
             System.out.println("Error in: FileAccess.createQuestion");
             System.exit(0);
-            return;
         }
 
     }
