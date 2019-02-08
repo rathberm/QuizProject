@@ -36,13 +36,13 @@ class Quiz {
         output();
 
 
-        right = 0;
     }
 
     /**
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
+        right = 0;
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
@@ -65,7 +65,7 @@ class Quiz {
             Question q = questions.get(i);
 
             System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
-            answer = queryUser(q.getQuestion().toLowerCase());
+            answer = queryUser(q.getQuestion());
             rightAnswered += manageAnswer(q);
 
         }
@@ -104,6 +104,7 @@ class Quiz {
 
     /**
      * Fragt den Benutzer nach der Anzahl der Fragen welche gestellt werden sollen
+     *
      * @return Fragen welche gestellt werden sollen
      */
     private int askAmount() {
@@ -215,7 +216,6 @@ class Quiz {
             allQuestions.addAll(notAllQuestions);
         }
         Collections.shuffle(allQuestions);
-
         return allQuestions;
     }
 
@@ -304,7 +304,6 @@ class Quiz {
             showHighscore();
         } else if (ans.equals("f")) {
             mainMenu();
-
         }
     }
 
@@ -314,14 +313,14 @@ class Quiz {
     private void initHighscore() {
         Highscore hsc = fileAccess.getHighscore();
         int currPercent = hsc.getPercent();
-        double newPercent = (getRight() / amountQuestions) * 100;
+        double newPercent = getRight() / amountQuestions;
+        System.out.println(newPercent);
         System.out.println("right: " + getRight());
         System.out.println("anzahl" + amountQuestions);
 
-        if (currPercent <= newPercent) {
+        if (currPercent < newPercent) {
             System.out.println("Gratulation!! Das war ein neuer Highscore!");
             String name = queryUser("Wie heißt du?");
-            System.out.println(newPercent);
             fileAccess.setHighscore(name, newPercent);
         }
     }
@@ -351,6 +350,7 @@ class Quiz {
 
     /**
      * Macht einen Sortierdurchlauf mit Bubblesort, um das Questions-Array zu sortieren
+     *
      * @return true: Questions-Array ist sortiert; false: Questions-Array nicht sortiert
      */
     private boolean sort() {
