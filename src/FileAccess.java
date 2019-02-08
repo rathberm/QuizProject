@@ -20,7 +20,7 @@ public class FileAccess {
      */
     private void firstCheck() {
         boolean error = false;
-        if (folderPath.isEmpty() || folderPath.equals("") || folderPath == null) {
+        if (folderPath.isEmpty()) {
             error = true;
         }
         if (!new File(folderPath).exists()) {
@@ -285,7 +285,9 @@ public class FileAccess {
                     }
                 }
 
-                file.delete();
+                if (file != null) {
+                    file.delete();
+                }
                 file = new File(folderPath + System.getProperty("file.separator") + pQuestion.getCategory() + ".txt");
                 file.createNewFile();
 

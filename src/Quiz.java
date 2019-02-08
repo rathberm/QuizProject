@@ -50,12 +50,10 @@ class Quiz {
 
         if (category.toLowerCase().equals("zufaellig")) {
             questions = mixQuestions();
-            while (!sort()) {
-            }
+            while (!sort()) {}
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
-            while (!sort()) {
-            }
+            while (!sort()) {}
         }
 
         //Sortiert die Fragen in der Liste zufällig neu
@@ -182,7 +180,7 @@ class Quiz {
 
         //Gibt die Namen der Kategorien aus
         for (String element : categories) {
-            output = output + element + " ";
+            output += element + " ";
         }
         System.out.println(output);
         pCategory = queryUser("Wunschkategorie: ");
@@ -226,7 +224,7 @@ class Quiz {
         String[] categories = fileAccess.getCategories();
         String output = "Du kannst zwischen folgenden Kategorien wählen: ";
         for (String element : categories) {
-            output = output + element + " ";
+            output += element + " ";
         }
         output = output + "Zufaellig";
         System.out.println(output);
