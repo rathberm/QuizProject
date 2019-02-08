@@ -415,7 +415,7 @@ public class FileAccess {
 }
 
 class Highscore{
-    private double percent;
+    private int percent;
     private String name;
 
     public Highscore(){
