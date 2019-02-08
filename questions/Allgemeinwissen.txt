@@ -2,19 +2,19 @@
 Pistole
 Eine weltberuehmte Skulptur vor dem Hauptsitz der UNO in New York zeigt eine Pistole mit Knoten im Lauf.
 
-#0/0-In welcher deutschen Stadt gruendete Red Bull Chef Dietrich Mateschitz 2009 einen Fussballverein?
+#2/2-In welcher deutschen Stadt gruendete Red Bull Chef Dietrich Mateschitz 2009 einen Fussballverein?
 Leipzig
 Red Bull Chef Dietrich Mateschitz gruendete 2009 einen Fussballverein in Leipzig.
 
-#1/1-2008 war der Kaktus des Jahres der ...?
+#1/2-2008 war der Kaktus des Jahres der ...?
 Schwiegermuttersitz
 2008 war der Kaktus des Jahres der Schwiegermuttersitz.
 
-#1/2-Wie wird Bruce Springsteen liebevoll von seinen Fans genannt?
+#1/3-Wie wird Bruce Springsteen liebevoll von seinen Fans genannt?
 The Boss
 Bruce Springsteen wird von seinen Fans liebevoll The Boss genannt.
 
-#4/4-Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei ...!
+#6/6-Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei ...!
 Freunden
 Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei Freunden.
 
@@ -22,7 +22,7 @@ Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei F
 Ringstock Punze Werkbrett Hammer Saege Feile Lupe Lampe Leuchte Schieblehre
 Werkzeuge eines Goldschmieds waeren beispielsweise: Punze, Werkbrett, Hammer ... usw.
 
-#0/0-Welcher Boxer Film von und mit Sylvester Stallone ging 2007 in Deutschland in die sechste und letzte Runde?
+#0/1-Welcher Boxer Film von und mit Sylvester Stallone ging 2007 in Deutschland in die sechste und letzte Runde?
 Rocky
 In die sechste und letzte Runde ging 2007 ein Film von Silvester Stallone, welcher hiess: Rocky.
 
