@@ -13,8 +13,6 @@ public class FileAccess {
     public FileAccess() {
         folderPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "questions";
         firstCheck();
-        //getQuestionsOfCategorie("bla0");
-        //createQuestion("bla0", "bla1", "bla2", "bla3");
     }
 
     /**
@@ -346,7 +344,7 @@ public class FileAccess {
                 file.createNewFile();
             }
             FileWriter fw = new FileWriter(file, true);
-            fw.write(fileContent.size() + ". Session - Richtig beantwortet: " + pRightAnswered + " / " + pQuestioned);
+            fw.write(System.lineSeparator() + fileContent.size() + ". Session - Richtig beantwortet: " + pRightAnswered + " / " + pQuestioned);
             fw.close();
         } catch (Exception e) {
             System.out.println("Error in: FileAccess.addHistoryEntry");

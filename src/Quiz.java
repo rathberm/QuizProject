@@ -46,8 +46,9 @@ public class Quiz {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
+        int rightAnswered = 0;
 
-        if (category.equals("zufaellig")) {
+        if (category.toLowerCase().equals("zufaellig")) {
             questions = mixQuestions();
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
@@ -61,17 +62,19 @@ public class Quiz {
 
             System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
-            manageAnswer(q);
+            rightAnswered += manageAnswer(q);
 
         }
         //Updated die Einträge in der entsprechenden .txt
         fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
+
+        fileAccess.addHistoryEntry(rightAnswered, amountQuestions);
     }
 
     /**
      * @param q Die Frage die verwaltet werden soll
      */
-    private void manageAnswer(Question q) {
+    private int manageAnswer(Question q) {
         if (answer.equals("exit")) {
             firstCheck();
         } else {
@@ -81,13 +84,16 @@ public class Quiz {
                 System.out.println("---------------------------------------------------------------------------------");
                 q.increaseRightAnswered();
                 incRight();
+                return 1;
             } else {
                 System.out.println("Das war leider falsch.");
                 System.out.println(q.getAnswer());
                 System.out.println("---------------------------------------------------------------------------------");
                 incWrong();
+                return 0;
             }
         }
+        return 0;
     }
 
     private int askAmount() {
@@ -169,7 +175,13 @@ public class Quiz {
     }
 
     private ArrayList<Question> smartQuestions() {
+        ArrayList<Question> arrl = fileAccess.getQuestionsOfCategorie(category);
 
+        for (int i = 0; i < arrl.size(); i++) {
+
+        }
+
+return arrl;
     }
 
     /**
@@ -238,7 +250,7 @@ public class Quiz {
                 createOwnQuestion();
             } else if (answer.contains("stellen")) {
                 askWolfram();
-            } else if (answer.contains("historie")) {
+            } else if (answer.contains("historie")){
                 showHisto();
             } else if (answer.equals("exit")) {
                 System.exit(0);
@@ -272,12 +284,12 @@ public class Quiz {
         }
     }
 
-    private void showHisto() {
+    private void showHisto(){
         ArrayList<String> histo = fileAccess.getHistory();
         System.out.println();
         System.out.println("---------------------------------------------------------------------------------");
-        for (int i = 0; i < histo.size(); i++) {
-            System.out.println(histo);
+        for (int i = 0; i < histo.size(); i++){
+            System.out.println(histo.get(i));
         }
         System.out.println();
         firstCheck();
