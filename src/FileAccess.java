@@ -372,10 +372,8 @@ public class FileAccess {
     }
 
     public void setHighscore(String pName, double pPercent){
-        ArrayList<String> fileContent = getHistory();
-
         try {
-            File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
+            File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -383,7 +381,7 @@ public class FileAccess {
             fw.write(pName + System.lineSeparator() + pPercent);
             fw.close();
         } catch (Exception e) {
-            System.out.println("Error in: FileAccess.addHistoryEntry");
+            System.out.println("Error in: FileAccess.setHighscore");
             System.exit(0);
         }
     }
@@ -403,7 +401,7 @@ public class FileAccess {
             }
             if (fileContent.size() == 3){
                 highscore.setName(fileContent.get(0));
-                highscore.setPercent(Double.parseDouble(fileContent.get(2)));
+                highscore.setPercent(Integer.parseInt(fileContent.get(1)));
                 return highscore;
             } else {
                 return highscore;
@@ -422,7 +420,7 @@ class Highscore{
 
     public Highscore(){
         name = "No-Name";
-        percent = 0.0;
+        percent = 0;
     }
 
     public double getPercent() {
