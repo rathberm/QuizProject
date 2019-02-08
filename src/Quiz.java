@@ -46,7 +46,6 @@ public class Quiz {
      * Gibt die Fragen aus und überprüft auf richtige Antworten
      */
     private void output() {
-        int count = 1;
 
         if (category.equals("zufaellig")) {
             questions = mixQuestions();
@@ -60,10 +59,10 @@ public class Quiz {
         for (int i = 0; i < amountQuestions; i++) {
             Question q = questions.get(i);
 
-            System.out.println("Frage " + count + "/" + (amountQuestions));
+            System.out.println("Frage " + (i + 1) + "/" + (amountQuestions));
             answer = queryUser(q.getQuestion());
             manageAnswer(q);
-            count++;
+
         }
         //Updated die Einträge in der entsprechenden .txt
         fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
@@ -169,6 +168,16 @@ public class Quiz {
         }
     }
 
+    private ArrayList<Question> smartQuestions() {
+        ArrayList<Question> arrl = fileAccess.getQuestionsOfCategorie(category);
+
+        for (int i = 0; i < arrl.size(); i++) {
+
+        }
+
+return arrl;
+    }
+
     /**
      * Verbindet alle Kategorien in einer Liste
      *
@@ -257,13 +266,13 @@ public class Quiz {
         if (userInput.equals("exit")) {
             firstCheck();
         } else {
-             String answer = shortAnswers.queryWolfram(userInput);
-             if (!answer.equals("-1")){
-                 System.out.println(answer);
-             }
-             answer = answer.replaceAll("[,-/#]", "");
-             fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
-             askWolfram();
+            String answer = shortAnswers.queryWolfram(userInput);
+            if (!answer.equals("-1")) {
+                System.out.println(answer);
+            }
+            answer = answer.replaceAll("[,-/#]", "");
+            fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
+            askWolfram();
         }
     }
 

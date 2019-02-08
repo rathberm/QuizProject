@@ -10,6 +10,7 @@ public class Question {
     private String category;
     private int rightAnswered;
     private int questioned;
+    private int percentage;
 
     public Question(String pCategory, String pQuestion, String[] pAnswerWord, String pAnswer, int pRightAnswered, int pQuestioned) {
         this.question = pQuestion;
@@ -18,6 +19,11 @@ public class Question {
         this.category = pCategory;
         this.rightAnswered = pRightAnswered;
         this.questioned = pQuestioned;
+        if(this.questioned != 0) {
+            this.percentage = Math.round(this.rightAnswered / this.questioned)*100;
+        }else{
+            this.percentage = 0;
+        }
     }
 
     /**
@@ -38,7 +44,9 @@ public class Question {
         }
         return rightAnswer;
     }
-
+    public int getPercentage(){
+        return percentage;
+    }
 
     public String getQuestion() {
         return question;
