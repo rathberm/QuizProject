@@ -320,4 +320,37 @@ public class FileAccess {
 
         return succeeded;
     }
+
+
+    public ArrayList<String> getHistory(){
+        File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
+        ArrayList<String> fileContent = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            for (String line; (line = br.readLine()) != null; ) {
+                fileContent.add(line);
+            }
+        } catch (Exception e) {
+            System.out.println("Error in: FileAccess.getQuestionsOfCategorie");
+            System.exit(0);
+        }
+        return fileContent;
+    }
+
+    public void addHistoryEntry(int pRightAnswered, int pQuestioned){
+        ArrayList<String> fileContent = getHistory();
+
+        try {
+            File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file, true);
+            fw.write(fileContent.size() + ". Session - Richtig beantwortet: " + pRightAnswered + " / " + pQuestioned);
+            fw.close();
+        } catch (Exception e) {
+            System.out.println("Error in: FileAccess.addHistoryEntry");
+            System.exit(0);
+        }
+    }
 }

@@ -232,7 +232,7 @@ return arrl;
     private void firstCheck() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Hauptmenue:");
-        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen oder nichts von alldem??(beantworten/Erstellen/stellen/nichts)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von alldem??(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
@@ -244,6 +244,8 @@ return arrl;
                 createOwnQuestion();
             } else if (answer.contains("stellen")) {
                 askWolfram();
+            } else if (answer.contains("historie")){
+                showHisto();
             } else if (answer.equals("exit")) {
                 System.exit(0);
             } else {
@@ -274,6 +276,17 @@ return arrl;
             fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
             askWolfram();
         }
+    }
+
+    private void showHisto(){
+        ArrayList<String> histo = fileAccess.getHistory();
+        System.out.println();
+        System.out.println("---------------------------------------------------------------------------------");
+        for (int i = 0; i < histo.size(); i++){
+            System.out.println(histo);
+        }
+        System.out.println();
+        firstCheck();
     }
 
     /**
