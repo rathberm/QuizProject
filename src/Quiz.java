@@ -50,12 +50,10 @@ class Quiz {
 
         if (category.toLowerCase().equals("zufaellig")) {
             questions = mixQuestions();
-            while (!sort()) {
-            }
+            while (!sort()) {}
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
-            while (!sort()) {
-            }
+            while (!sort()) {}
         }
 
         //Sortiert die Fragen in der Liste zufällig neu
