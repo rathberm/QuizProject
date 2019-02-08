@@ -12,7 +12,6 @@ public class Quiz {
     private ArrayList<Question> questions = new ArrayList<>();
 
     private int right;
-    private int wrong;
     private int amountQuestions;
 
     private String answer;
@@ -26,7 +25,6 @@ public class Quiz {
      */
     public Quiz() {
         right = 0;
-        wrong = 0;
         answer = "";
         fileAccess = new FileAccess();
         shortAnswers = new ShortAnswers();
@@ -39,7 +37,9 @@ public class Quiz {
         output();
 
         System.out.println("Du hast das Quiz beendet.");
-        System.out.println("Du hast " + getRight() + " Fragen richtig und " + getWrong() + " Fragen falsch beantwortet.");
+        System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
+        firstCheck();
+        right = 0;
     }
 
     /**
@@ -89,7 +89,6 @@ public class Quiz {
                 System.out.println("Das war leider falsch.");
                 System.out.println(q.getAnswer());
                 System.out.println("---------------------------------------------------------------------------------");
-                incWrong();
                 return 0;
             }
         }
@@ -172,16 +171,6 @@ public class Quiz {
             System.out.println("Ok, Frage erstellen wird abgebrochen.");
             firstCheck();
         }
-    }
-
-    private ArrayList<Question> smartQuestions() {
-        ArrayList<Question> arrl = fileAccess.getQuestionsOfCategorie(category);
-
-        for (int i = 0; i < arrl.size(); i++) {
-
-        }
-
-return arrl;
     }
 
     /**
@@ -314,14 +303,6 @@ return arrl;
 
     private void incRight() {
         this.right++;
-    }
-
-    private int getWrong() {
-        return wrong;
-    }
-
-    private void incWrong() {
-        this.wrong++;
     }
 
     public ArrayList<Question> getQuestions() {
