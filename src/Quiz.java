@@ -79,11 +79,13 @@ public class Quiz {
             q.increaseQuestioned();
             if (q.validateAnswer(answer)) {
                 System.out.println("Das war richtig.");
+                System.out.println("---------------------------------------------------------------------------------");
                 q.increaseRightAnswered();
                 incRight();
             } else {
                 System.out.println("Das war leider falsch.");
                 System.out.println(q.getAnswer());
+                System.out.println("---------------------------------------------------------------------------------");
                 incWrong();
             }
         }
@@ -219,6 +221,8 @@ public class Quiz {
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
     private void firstCheck() {
+        System.out.println("---------------------------------------------------------------------------------");
+        System.out.println("Hauptmenue:");
         String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen oder nichts von alldem??(beantworten/Erstellen/stellen/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("beantworten")) {

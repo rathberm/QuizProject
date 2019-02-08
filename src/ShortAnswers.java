@@ -27,7 +27,7 @@ public class ShortAnswers {
         //fügt den gesplitteten Input String wieder zusammen
         //und setzt hinter jedes Wort ein +
         url = url + String.join("+", arr);
-        url = url + "%3f";
+        url = url + "%3f&units=metric";
         //Replaced alle leerzeichen die eventuell noch vorhanden sind
         url.replaceAll("\\s+", "");
 
@@ -55,7 +55,9 @@ public class ShortAnswers {
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println("Error in ShortAnswers.queryWolfram");
+            System.out.println("Diese eingabe wurde nicht richtig erkannt.");
+            System.out.println("Bist du sicher das die Eingabe in Englisch war?");
+            System.out.println("Bist du sicher das es eine Frage war?");
         }
 
     }
