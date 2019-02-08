@@ -102,6 +102,10 @@ class Quiz {
         return 0;
     }
 
+    /**
+     * Fragt den Benutzer nach der Anzahl der Fragen welche gestellt werden sollen
+     * @return Fragen welche gestellt werden sollen
+     */
     private int askAmount() {
         String length;
         System.out.println("Erkannte Kategorie: " + category);
@@ -322,6 +326,9 @@ class Quiz {
         }
     }
 
+    /**
+     * Führt das Programm in die Routine über, in welcher der Benutzer fragen an die Wolfram-Engine stellen kann
+     */
     private void askWolfram() {
         System.out.println();
         System.out.println("---------------------------------------------------------------------------------");
@@ -342,7 +349,10 @@ class Quiz {
         }
     }
 
-
+    /**
+     * Macht einen Sortierdurchlauf mit Bubblesort, um das Questions-Array zu sortieren
+     * @return
+     */
     private boolean sort() {
         Question temp;
         boolean sorted = true;

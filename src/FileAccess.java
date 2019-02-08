@@ -4,28 +4,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-
-
-
-
 public class FileAccess {
     private String folderPath;
 
     /**
-     * Standardkonstruktor
+     * Konstruktor
      */
     public FileAccess() {
         folderPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "questions";
-        firstCheck();
-    }
-
-    /**
-     * Konstruktor, bei welchem ein anderer Dateispeicherort gewählt werden kann
-     *
-     * @param pFolderPath neuer Dateispeicherort
-     */
-    public FileAccess(String pFolderPath) {
-        folderPath = pFolderPath;
         firstCheck();
     }
 
@@ -322,7 +308,10 @@ public class FileAccess {
         return succeeded;
     }
 
-
+    /**
+     * Gibt die Historie zurück
+     * @return Historie
+     */
     public ArrayList<String> getHistory(){
         File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
         ArrayList<String> fileContent = new ArrayList<>();
@@ -338,6 +327,11 @@ public class FileAccess {
         return fileContent;
     }
 
+    /**
+     * Fügt einen Historieneintrag hinzu
+     * @param pRightAnswered Anzahl richtige Antworten
+     * @param pQuestioned Anzahl gestellte Fragen
+     */
     public void addHistoryEntry(int pRightAnswered, int pQuestioned){
         ArrayList<String> fileContent = getHistory();
 
@@ -355,6 +349,9 @@ public class FileAccess {
         }
     }
 
+    /**
+     * Setzt die Historie zurück
+     */
     public void clearHistory(){
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
@@ -370,6 +367,11 @@ public class FileAccess {
         }
     }
 
+    /**
+     * Setzt einen neuen Highscore
+     * @param pName Name des Nutzers, welcher den Highscore errungen hat
+     * @param pPercent Prozentuale anzahl an fragen, welche vom Benutzer richtig beantwortet wurden
+     */
     public void setHighscore(String pName, double pPercent){
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
@@ -385,6 +387,10 @@ public class FileAccess {
         }
     }
 
+    /**
+     * Gibt den momentanen Highscore zurück
+     * @return Object welches den momentanen Highscore hält
+     */
     public Highscore getHighscore(){
         File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
         ArrayList<String> fileContent = new ArrayList<>();
@@ -413,6 +419,9 @@ public class FileAccess {
     }
 }
 
+/**
+ * Klasse welche den aktuellen Highscore handelt
+ */
 class Highscore{
     private int percent;
     private String name;
