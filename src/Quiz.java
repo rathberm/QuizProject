@@ -169,13 +169,7 @@ public class Quiz {
     }
 
     private ArrayList<Question> smartQuestions() {
-        ArrayList<Question> arrl = fileAccess.getQuestionsOfCategorie(category);
 
-        for (int i = 0; i < arrl.size(); i++) {
-
-        }
-
-return arrl;
     }
 
     /**
@@ -244,7 +238,7 @@ return arrl;
                 createOwnQuestion();
             } else if (answer.contains("stellen")) {
                 askWolfram();
-            } else if (answer.contains("historie")){
+            } else if (answer.contains("historie")) {
                 showHisto();
             } else if (answer.equals("exit")) {
                 System.exit(0);
@@ -278,11 +272,11 @@ return arrl;
         }
     }
 
-    private void showHisto(){
+    private void showHisto() {
         ArrayList<String> histo = fileAccess.getHistory();
         System.out.println();
         System.out.println("---------------------------------------------------------------------------------");
-        for (int i = 0; i < histo.size(); i++){
+        for (int i = 0; i < histo.size(); i++) {
             System.out.println(histo);
         }
         System.out.println();

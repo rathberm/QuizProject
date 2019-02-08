@@ -1,5 +1,6 @@
 /**
  * In dieser Klasse sind die Fragen mit ihren Attributen definiert
+ *
  * @author Jan Roth, Moritz Rathberger
  */
 
@@ -19,9 +20,9 @@ public class Question {
         this.category = pCategory;
         this.rightAnswered = pRightAnswered;
         this.questioned = pQuestioned;
-        if(this.questioned != 0) {
-            this.percentage = Math.round(this.rightAnswered / this.questioned)*100;
-        }else{
+        if (this.questioned != 0) {
+            this.percentage = Math.round(this.rightAnswered / this.questioned) * 100;
+        } else {
             this.percentage = 0;
         }
     }
@@ -44,7 +45,8 @@ public class Question {
         }
         return rightAnswer;
     }
-    public int getPercentage(){
+
+    public int getPercentage() {
         return percentage;
     }
 
