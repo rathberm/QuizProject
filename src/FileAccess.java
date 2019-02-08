@@ -427,7 +427,7 @@ class Highscore{
         return percent;
     }
 
-    public void setPercent(double percent) {
+    public void setPercent(int percent) {
         this.percent = percent;
     }
 
