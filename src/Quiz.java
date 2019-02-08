@@ -310,7 +310,7 @@ class Quiz {
      */
     private void initHighscore() {
         Highscore hsc = fileAccess.getHighscore();
-        int currPercent = hsc.getPercent();
+        Double currPercent = hsc.getPercent();
         double newPercent = getRight() / amountQuestions;
         System.out.println(newPercent);
         System.out.println("right: " + getRight());

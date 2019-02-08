@@ -404,7 +404,7 @@ public class FileAccess {
 
             if (fileContent.size() == 2){
                 highscore.setName(fileContent.get(0));
-                highscore.setPercent(Integer.parseInt(fileContent.get(1)));
+                highscore.setPercent(Double.parseDouble(fileContent.get(1)));
                 return highscore;
             } else {
                 return highscore;
@@ -421,7 +421,7 @@ public class FileAccess {
  * Klasse welche den aktuellen Highscore handelt
  */
 class Highscore{
-    private int percent;
+    private double percent;
     private String name;
 
     public Highscore(){
@@ -429,14 +429,13 @@ class Highscore{
         percent = 0;
     }
 
-    public int getPercent() {
+    public double getPercent() {
         return percent;
     }
 
-    public void setPercent(int percent) {
+    public void setPercent(double percent) {
         this.percent = percent;
     }
-
 
     public String getName() {
         return name;
