@@ -370,7 +370,7 @@ public class FileAccess {
         }
     }
 
-    public void setHighscore(String pName, int pPercent){
+    public void setHighscore(String pName, double pPercent){
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
             if (!file.exists()) {
