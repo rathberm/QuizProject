@@ -39,7 +39,7 @@ public class ShortAnswers {
      *
      * @param pInput Die Frage
      */
-    public void queryWolfram(String pInput) {
+    public String queryWolfram(String pInput) {
 
         String urlString = buildUrl(pInput);
 
@@ -51,15 +51,16 @@ public class ShortAnswers {
             String line;
             //Wenn die gelesene Zeile keine leere Zeile ist, wird sie in der Kosole ausgegeben
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                return line;
             }
             reader.close();
+            return "-1";
         } catch (Exception e) {
             System.out.println("Diese eingabe wurde nicht richtig erkannt.");
             System.out.println("Bist du sicher das die Eingabe in Englisch war?");
             System.out.println("Bist du sicher das es eine Frage war?");
+            return "-1";
         }
-
     }
 }
 

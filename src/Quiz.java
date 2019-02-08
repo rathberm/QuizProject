@@ -253,12 +253,17 @@ public class Quiz {
         System.out.println("Jetzt kannst du Fragen stellen die von Wolfram Alpha beantwortet werden.");
         System.out.println("Aber Achtung: Du musst die fragen auf Englisch stellen!");
         System.out.println("Alternativ kommst du durch die eingabe von \"exit\" wieder zurueck zur Auswahl.");
-        String ans = queryUser("Was möchtest du wissen?");
-        if (ans.equals("exit")) {
+        String userInput = queryUser("Was möchtest du wissen?");
+        if (userInput.equals("exit")) {
             firstCheck();
         } else {
-             shortAnswers.queryWolfram(ans);
-            askWolfram();
+             String answer = shortAnswers.queryWolfram(userInput);
+             if (!answer.equals("-1")){
+                 System.out.println(answer);
+             }
+             answer = answer.replaceAll("[,-/#]", "");
+             fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
+             askWolfram();
         }
     }
 
