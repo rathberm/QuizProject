@@ -399,7 +399,7 @@ public class FileAccess {
             for (String line; (line = br.readLine()) != null; ) {
                 fileContent.add(line);
             }
-            if (fileContent.size() == 3){
+            if (fileContent.size() == 2){
                 highscore.setName(fileContent.get(0));
                 highscore.setPercent(Integer.parseInt(fileContent.get(1)));
                 return highscore;
