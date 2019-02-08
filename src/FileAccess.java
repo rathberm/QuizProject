@@ -4,6 +4,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+
+
+
+
 public class FileAccess {
     private String folderPath;
 
@@ -365,5 +369,76 @@ public class FileAccess {
             System.out.println("Error in: FileAccess.clearHistory");
             System.exit(0);
         }
+    }
+
+    public void setHighscore(String pName, double pPercent){
+        ArrayList<String> fileContent = getHistory();
+
+        try {
+            File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file, true);
+            fw.write(pName + System.lineSeparator() + pPercent);
+            fw.close();
+        } catch (Exception e) {
+            System.out.println("Error in: FileAccess.addHistoryEntry");
+            System.exit(0);
+        }
+    }
+
+    public Highscore getHighscore(){
+        File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
+        ArrayList<String> fileContent = new ArrayList<>();
+        Highscore highscore = new Highscore();
+
+        if (file.exists() == false){
+            return highscore;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            for (String line; (line = br.readLine()) != null; ) {
+                fileContent.add(line);
+            }
+            if (fileContent.size() == 3){
+                highscore.setName(fileContent.get(0));
+                highscore.setPercent(Double.parseDouble(fileContent.get(2)));
+                return highscore;
+            } else {
+                return highscore;
+            }
+        } catch (Exception e) {
+            System.out.println("Error in: FileAccess.getHighscore");
+            System.exit(0);
+            return highscore;
+        }
+    }
+}
+
+class Highscore{
+    private double percent;
+    private String name;
+
+    public Highscore(){
+        name = "No-Name";
+        percent = 0.0;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
