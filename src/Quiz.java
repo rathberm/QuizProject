@@ -34,8 +34,6 @@ class Quiz {
         System.out.println("Hallo, willkommen bei unserem Quiz!");
         mainMenu();
         output();
-
-
     }
 
     /**
@@ -50,10 +48,12 @@ class Quiz {
 
         if (category.toLowerCase().equals("zufaellig")) {
             questions = mixQuestions();
-            while (!sort()) {}
+            while (!sort()) {
+            }
         } else {
             questions = fileAccess.getQuestionsOfCategorie(category);
-            while (!sort()) {}
+            while (!sort()) {
+            }
         }
 
         //Sortiert die Fragen in der Liste zufällig neu
@@ -151,8 +151,7 @@ class Quiz {
      * Überprüft ob der übergebene String eine Kategorie ist oder nicht
      *
      * @param pCategory Die Kategorie
-     * @return True wenn ja, false wenn nicht.
-     */
+     * @return True wenn ja, false wenn nicht.    */
     private boolean isCategory(String pCategory) {
         boolean r = false;
         String[] categories = fileAccess.getCategories();
@@ -295,14 +294,7 @@ class Quiz {
         Highscore hsc = fileAccess.getHighscore();
         System.out.println("Aktueller Highscore: ");
         System.out.println(hsc.getName() + ": " + hsc.getPercent());
-        String ans = queryUser("\"f\" um fortzufahren.");
-
-        if (!ans.matches("[f]")) {
-            System.out.println("Keine gültige Eingabe, versuchs nochmal.");
-            showHighscore();
-        } else if (ans.equals("f")) {
-            mainMenu();
-        }
+        mainMenu();
     }
 
     /**
@@ -311,10 +303,7 @@ class Quiz {
     private void initHighscore() {
         Highscore hsc = fileAccess.getHighscore();
         Double currPercent = hsc.getPercent();
-        double newPercent = getRight() / amountQuestions;
-        System.out.println(newPercent);
-        System.out.println("right: " + getRight());
-        System.out.println("anzahl" + amountQuestions);
+        double newPercent = (double) right / amountQuestions;
 
         if (currPercent < newPercent) {
             System.out.println("Gratulation!! Das war ein neuer Highscore!");
