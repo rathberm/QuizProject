@@ -7,8 +7,7 @@ import java.net.URL;
  *
  * @author Moritz Rathberger
  */
-public class ShortAnswers {
-    private final String APPID = "6GHRKV-R85EJLHKVY";
+class ShortAnswers {
 
     /**
      * Baut aus dem Input String eine WolframAlpha Url
@@ -18,6 +17,7 @@ public class ShortAnswers {
      */
     private String buildUrl(String pInput) {
 
+        final String APPID = "6GHRKV-R85EJLHKVY";
         //Standarteil der url
         String url = "http://api.wolframalpha.com/v1/result?appid=";
         url = url + APPID;

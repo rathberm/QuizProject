@@ -7,9 +7,9 @@ import java.util.Scanner;
  *
  * @author Moritz Rathberger
  */
-public class Quiz {
+class Quiz {
 
-    private ArrayList<Question> questions = new ArrayList<>();
+    private ArrayList<Question> questions;
 
     private int right;
     private int amountQuestions;
@@ -24,13 +24,15 @@ public class Quiz {
      * Standardkonstruktor
      */
     public Quiz() {
+        questions = new ArrayList<>();
         right = 0;
         answer = "";
+
         fileAccess = new FileAccess();
         shortAnswers = new ShortAnswers();
 
         System.out.println("Hallo, willkommen bei unserem Quiz!");
-        firstCheck();
+        mainMenue();
         printCategories();
         category = askCategory();
         amountQuestions = askAmount();
@@ -38,7 +40,7 @@ public class Quiz {
 
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
-        firstCheck();
+        mainMenue();
         right = 0;
     }
 
@@ -80,7 +82,7 @@ public class Quiz {
      */
     private int manageAnswer(Question q) {
         if (answer.equals("exit")) {
-            firstCheck();
+            mainMenue();
         } else {
             q.increaseQuestioned();
             if (q.validateAnswer(answer)) {
@@ -104,7 +106,7 @@ public class Quiz {
         System.out.println("Erkannte Kategorie: " + category);
         length = queryUser("Wie viele Fragen möchtest du beantworten?");
         if (length.equals("exit")) {
-            firstCheck();
+            mainMenue();
         }
 
         if (!length.matches("[-0-9]+")) {
@@ -131,7 +133,7 @@ public class Quiz {
         String cat = queryUser("Zu welcher Kategorie möchtest du Fragen beantworten?");
 
         if (cat.equals("exit")) {
-            firstCheck();
+            mainMenue();
         }
         if (isCategory(cat)) {
             return cat;
@@ -165,15 +167,15 @@ public class Quiz {
         answerWord = queryUser("Jetzt musst du die Antwort für deine Frage eingeben: ");
         answerSentence = queryUser("Bitte gib jetzt den Antwortsatz ein: ");
 
-        String str = queryUser("Willst du die Frage " + question + " der Kategorie " + pCategory + " mit der Antwort " + answerWord + " und dem Antwortsatz " + answerSentence + " wirklich speichern?(ja/nein)").toLowerCase();
+        String str = queryUser("Willst du die Frage \"" + question + "\" der Kategorie " + pCategory + " mit der Antwort \"" + answerWord + "\" und dem Antwortsatz \"" + answerSentence + "\" wirklich speichern?(ja/nein)").toLowerCase();
 
         if (str.equals("ja") && str.matches("[A-z]+")) {
             fileAccess.createQuestion(pCategory, question, answerWord, answerSentence);
             System.out.println("Frage erfolgreich gespeichert.");
-            firstCheck();
+            mainMenue();
         } else {
             System.out.println("Ok, Frage erstellen wird abgebrochen.");
-            firstCheck();
+            mainMenue();
         }
     }
 
@@ -198,7 +200,7 @@ public class Quiz {
     /**
      * Überprüft ob der übergebene String eine Kategorie ist oder nicht
      *
-     * @param pCategory
+     * @param pCategory Die Kategorie
      * @return True wenn ja, false wenn nicht.
      */
     private boolean isCategory(String pCategory) {
@@ -228,10 +230,10 @@ public class Quiz {
     /**
      * Frägt den Benutzer ob er spielen will, wenn nein wird das Programm beendet.
      */
-    private void firstCheck() {
+    private void mainMenue() {
         System.out.println("---------------------------------------------------------------------------------");
         System.out.println("Hauptmenue:");
-        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von alldem??(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
+        String answer = queryUser("Willst du Fragen beantworten, selber Fragen erstellen, Fragen stellen, Historie einsehen oder nichts von allem?(beantworten/erstellen/stellen/historie/nichts)").toLowerCase();
         if (answer.matches("[A-z]+")) {
             if (answer.contains("beantworten")) {
                 System.out.println("Ok, los gehts!");
@@ -249,11 +251,11 @@ public class Quiz {
                 System.exit(0);
             } else {
                 System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
-                firstCheck();
+                mainMenue();
             }
         } else {
             System.out.println("Das war keine gültige Antwort, versuchs nochmal.");
-            firstCheck();
+            mainMenue();
         }
     }
 
@@ -265,14 +267,14 @@ public class Quiz {
         System.out.println("Alternativ kommst du durch die eingabe von \"exit\" wieder zurueck zur Auswahl.");
         String userInput = queryUser("Was möchtest du wissen?");
         if (userInput.equals("exit")) {
-            firstCheck();
+            mainMenue();
         } else {
             String answer = shortAnswers.queryWolfram(userInput);
             if (!answer.equals("-1")) {
                 System.out.println(answer);
+                answer = answer.replaceAll("[,-/#]", "");
+                fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
             }
-            answer = answer.replaceAll("[,-/#]", "");
-            fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);
             askWolfram();
         }
     }
@@ -287,13 +289,14 @@ public class Quiz {
         System.out.println();
         String ans = queryUser("\"l\" zum löschen, \"f\" um fortzufahren.");
 
-        if(!ans.matches("[lf]")){
+        if (!ans.matches("[lf]")) {
             System.out.println("Keine gültige Eingabe, versuchs nochmal.");
             showHisto();
-        }else if(ans.equals("l")){
+        } else if (ans.equals("l")) {
             fileAccess.clearHistory();
+            System.out.println("Historie wurde geloescht.");
         }
-        firstCheck();
+        mainMenue();
     }
 
     private boolean sort() {
@@ -320,8 +323,7 @@ public class Quiz {
     private String queryUser(String pText) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(pText);
-        String input = scanner.nextLine();
-        return input;
+        return scanner.nextLine();
     }
 
     private int getRight() {
@@ -330,9 +332,5 @@ public class Quiz {
 
     private void incRight() {
         this.right++;
-    }
-
-    public ArrayList<Question> getQuestions() {
-        return questions;
     }
 }

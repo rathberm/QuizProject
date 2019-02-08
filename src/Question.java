@@ -4,7 +4,7 @@
  * @author Jan Roth, Moritz Rathberger
  */
 
-public class Question {
+class Question {
     private String question;
     private String[] answerWord;
     private String answer;
@@ -25,7 +25,7 @@ public class Question {
         } else {
             this.percentage = 0;
         }
-}
+    }
 
     /**
      * Vergleicht die Antwort mit der Lösung
