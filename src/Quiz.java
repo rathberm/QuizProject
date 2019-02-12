@@ -326,7 +326,7 @@ class Quiz {
             mainMenu();
         } else {
             String answer = shortAnswers.queryWolfram(userInput);
-            if (!answer.equals("-1")) {
+           if (!answer.equals("-1")) {
                 System.out.println(answer);
                 answer = answer.replaceAll("[,-/#]", "");
                 fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);

@@ -1,8 +1,8 @@
-#0/0-Eine weltberuehmte Skulptur vor dem Hauptsitz der UNO in New York zeigt ...?
+#0/1-Eine weltberuehmte Skulptur vor dem Hauptsitz der UNO in New York zeigt ...?
 Pistole
 Eine weltberuehmte Skulptur vor dem Hauptsitz der UNO in New York zeigt eine Pistole mit Knoten im Lauf.
 
-#2/2-In welcher deutschen Stadt gruendete Red Bull Chef Dietrich Mateschitz 2009 einen Fussballverein?
+#3/3-In welcher deutschen Stadt gruendete Red Bull Chef Dietrich Mateschitz 2009 einen Fussballverein?
 Leipzig
 Red Bull Chef Dietrich Mateschitz gruendete 2009 einen Fussballverein in Leipzig.
 
@@ -14,11 +14,11 @@ Schwiegermuttersitz
 The Boss
 Bruce Springsteen wird von seinen Fans liebevoll The Boss genannt.
 
-#6/6-Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei ...!
+#7/7-Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei ...!
 Freunden
 Wie hiess der Slogan der Fussball WM 2006 in Deutschland? Die Welt zu Gast bei Freunden.
 
-#1/1-Wie heisst ein Werkzeug des Goldschmieds?
+#1/2-Wie heisst ein Werkzeug des Goldschmieds?
 Ringstock Punze Werkbrett Hammer Saege Feile Lupe Lampe Leuchte Schieblehre
 Werkzeuge eines Goldschmieds waeren beispielsweise: Punze, Werkbrett, Hammer ... usw.
 
@@ -30,7 +30,7 @@ In die sechste und letzte Runde ging 2007 ein Film von Silvester Stallone, welch
 Schema F
 Eine routinemaessige Handlung heisst Schema F.
 
-#0/3-Welche Fussballmannschaft gewann im Jahr 2000 den DFB Pokal?
+#0/4-Welche Fussballmannschaft gewann im Jahr 2000 den DFB Pokal?
 Bayern Muenchen
 2000 gewann Bayern Muenchen den DFB Pokal.
 

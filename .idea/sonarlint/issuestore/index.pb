@@ -22,3 +22,7 @@ H
 QuizProject.iml,6\e\6e63c7fc6257fe08ef9af65d70430d7777bd4fda
 E
 src/ShortAnswers.java,5\d\5dc37430fa49e644e656e02fd4ae995c0b2ce6a0
+H
+questions/geschichte.txt,2\0\20f74bfce9d517d3b89cc04aec9ba4402479432a
+;
+history.txt,c\e\ce422ab248352bda06b28c370895e3587203b00f

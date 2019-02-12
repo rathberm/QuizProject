@@ -42,18 +42,15 @@ class ShortAnswers {
     public String queryWolfram(String pInput) {
 
         String urlString = buildUrl(pInput);
+        System.out.println(urlString);
 
         try {
             URL url = new URL(urlString);
             //Erzeugt einen Reader der den InputStream der Seite liest
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
-            //Wenn die gelesene Zeile keine leere Zeile ist, wird sie in der Kosole ausgegeben
-            if (reader.readLine() != null){
-                return reader.readLine();
-            }
-            reader.close();
-            return "-1";
+            return reader.readLine();
+
         } catch (Exception e) {
             System.out.println("Diese eingabe wurde nicht richtig erkannt.");
             System.out.println("Bist du sicher das die Eingabe in Englisch war?");
