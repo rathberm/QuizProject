@@ -70,7 +70,7 @@ class Quiz {
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
         //Updated die Einträge in der entsprechenden .txt
-        fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
+        fileAccess.changeStatsOfQuestionsInCategorie(questions, true);
         fileAccess.addHistoryEntry(rightAnswered, amountQuestions);
         initHighscore();
         mainMenu();
