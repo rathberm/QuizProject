@@ -223,7 +223,7 @@ class Quiz {
         String[] categories = fileAccess.getCategories();
         String output = "Du kannst zwischen folgenden Kategorien wählen: ";
         for (String element : categories) {
-            output += element + " ";
+            output += element + ", ";
         }
         output = output + "Zufaellig";
         System.out.println(output);
