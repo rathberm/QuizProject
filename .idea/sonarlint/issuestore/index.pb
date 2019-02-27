@@ -26,3 +26,5 @@ H
 questions/geschichte.txt,2\0\20f74bfce9d517d3b89cc04aec9ba4402479432a
 ;
 history.txt,c\e\ce422ab248352bda06b28c370895e3587203b00f
+M
+questions/allgemeinwissen.txt,7\9\79418d4a9988bdeecb535b790a9be17db54e0e88

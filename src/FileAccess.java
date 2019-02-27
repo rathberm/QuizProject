@@ -147,6 +147,7 @@ class FileAccess {
 
     /**
      * gibt die Frage zurück (im format von str, der files)
+     *
      * @param pStr String welcher auszuwerten ist
      * @return Frage
      */
@@ -169,6 +170,7 @@ class FileAccess {
 
     /**
      * gibt an, wie oft eine frage richtig beantwortet wurde (im format von str, der files)
+     *
      * @param pStr String welcher auszuwerten ist
      * @return anzahl richtig beantwortet
      */
@@ -197,6 +199,7 @@ class FileAccess {
 
     /**
      * gibt an, wie oft eine frage gestellt wurde (im format von str, der files)
+     *
      * @param pStr String welcher auszuwerten ist
      * @return anzahl frage gestellt
      */
@@ -264,8 +267,9 @@ class FileAccess {
 
     /**
      * Aktualisiert die Fragelisten (dateien) (die beiden parameter der fragen "rightAnswered" und "questioned"
+     *
      * @param pQuestions Arraylist von fragen welche aktualisiert werden sollen
-     * @param pReset Gibt an, ob "rightAnswered" und "questioned", für alle fragen der Arraylist, auf 0 zurück gesetzt werden sollen
+     * @param pReset     Gibt an, ob "rightAnswered" und "questioned", für alle fragen der Arraylist, auf 0 zurück gesetzt werden sollen
      */
     public void changeStatsOfQuestionsInCategorie(ArrayList<Question> pQuestions, boolean pReset) {
         for (Question pQuestion : pQuestions) {
@@ -306,9 +310,10 @@ class FileAccess {
 
     /**
      * Gibt die Historie zurück
+     *
      * @return Historie
      */
-    public ArrayList<String> getHistory(){
+    public ArrayList<String> getHistory() {
         File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
         ArrayList<String> fileContent = new ArrayList<>();
 
@@ -325,10 +330,11 @@ class FileAccess {
 
     /**
      * Fügt einen Historieneintrag hinzu
+     *
      * @param pRightAnswered Anzahl richtige Antworten
-     * @param pQuestioned Anzahl gestellte Fragen
+     * @param pQuestioned    Anzahl gestellte Fragen
      */
-    public void addHistoryEntry(int pRightAnswered, int pQuestioned){
+    public void addHistoryEntry(int pRightAnswered, int pQuestioned) {
         ArrayList<String> fileContent = getHistory();
 
         try {
@@ -348,7 +354,7 @@ class FileAccess {
     /**
      * Setzt die Historie zurück
      */
-    public void clearHistory(){
+    public void clearHistory() {
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "history.txt");
             file.delete();
@@ -365,10 +371,11 @@ class FileAccess {
 
     /**
      * Setzt einen neuen Highscore
-     * @param pName Name des Nutzers, welcher den Highscore errungen hat
+     *
+     * @param pName    Name des Nutzers, welcher den Highscore errungen hat
      * @param pPercent Prozentuale anzahl an fragen, welche vom Benutzer richtig beantwortet wurden
      */
-    public void setHighscore(String pName, double pPercent){
+    public void setHighscore(String pName, double pPercent) {
         try {
             File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
             if (!file.exists()) {
@@ -385,14 +392,15 @@ class FileAccess {
 
     /**
      * Gibt den momentanen Highscore zurück
+     *
      * @return Object welches den momentanen Highscore hält
      */
-    public Highscore getHighscore(){
+    public Highscore getHighscore() {
         File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "highscore.txt");
         ArrayList<String> fileContent = new ArrayList<>();
         Highscore highscore = new Highscore();
 
-        if (!file.exists()){
+        if (!file.exists()) {
             return highscore;
         }
 
@@ -401,7 +409,7 @@ class FileAccess {
                 fileContent.add(line);
             }
 
-            if (fileContent.size() == 2){
+            if (fileContent.size() == 2) {
                 highscore.setName(fileContent.get(0));
                 highscore.setPercent(Double.parseDouble(fileContent.get(1)));
                 return highscore;
@@ -419,11 +427,11 @@ class FileAccess {
 /**
  * Klasse welche den aktuellen Highscore handelt
  */
-class Highscore{
+class Highscore {
     private double percent;
     private String name;
 
-    public Highscore(){
+    public Highscore() {
         name = "No-Name";
         percent = 0;
     }

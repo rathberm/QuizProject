@@ -70,7 +70,7 @@ class Quiz {
         System.out.println("Du hast das Quiz beendet.");
         System.out.println("Du hast " + getRight() + " Fragen richtig und " + (amountQuestions - right) + " Fragen falsch beantwortet.");
         //Updated die Einträge in der entsprechenden .txt
-        fileAccess.changeStatsOfQuestionsInCategorie(questions, true);
+        fileAccess.changeStatsOfQuestionsInCategorie(questions, false);
         fileAccess.addHistoryEntry(rightAnswered, amountQuestions);
         initHighscore();
         mainMenu();
@@ -151,7 +151,8 @@ class Quiz {
      * Überprüft ob der übergebene String eine Kategorie ist oder nicht
      *
      * @param pCategory Die Kategorie
-     * @return True wenn ja, false wenn nicht.    */
+     * @return True wenn ja, false wenn nicht.
+     */
     private boolean isCategory(String pCategory) {
         boolean r = false;
         String[] categories = fileAccess.getCategories();
@@ -326,7 +327,7 @@ class Quiz {
             mainMenu();
         } else {
             String answer = shortAnswers.queryWolfram(userInput);
-           if (!answer.equals("-1")) {
+            if (!answer.equals("-1")) {
                 System.out.println(answer);
                 answer = answer.replaceAll("[,-/#]", "");
                 fileAccess.createQuestion("WolframShortAnswer", userInput, answer, answer);

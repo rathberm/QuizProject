@@ -42,7 +42,6 @@ class ShortAnswers {
     public String queryWolfram(String pInput) {
 
         String urlString = buildUrl(pInput);
-        System.out.println(urlString);
 
         try {
             URL url = new URL(urlString);
