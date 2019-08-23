@@ -1,9 +1,6 @@
 # QuizProject
-rathberm = Moritz Rathberger
-<br>
-newPing = Jan Roth
-<br><br>
-Fragen können im Ordner "questions" gefunden werden.<br>
+A simple quiz implementation in *Java*.
+Standard questions and manually added questions can be found in the *questions* folder.<br>
 Datei = Thema
 <br>
 Coding:
